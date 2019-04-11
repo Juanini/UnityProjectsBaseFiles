@@ -9,4 +9,10 @@ public class Trace : MonoBehaviour {
     {
         UnityEngine.Debug.Log(string.Format(format, arguments));
     }
+
+    [Conditional("USE_LOGS")]
+    public static void LogError(string format, params object[] arguments)
+    {
+        UnityEngine.Debug.LogError(string.Format(format, arguments));
+    }
 }

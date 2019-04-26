@@ -1,2 +1,3 @@
-# UnityUtils
-Unity utility scripts
+# Unity Projects Base Files
+
+Files used in all projects

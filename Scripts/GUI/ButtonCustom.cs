@@ -10,11 +10,11 @@ using TMPro;
 
 public class ButtonCustom : MonoBehaviour
 {
-    [BoxGroup("Elements")] public TextMeshProUGUI buttonTextLabel;
+    [BoxGroup("Elements")] public Text buttonTextLabel;
 
     [BoxGroup("Properties")] public string buttonTextStr;
 
-    private Button button;
+    public Button button;
 
     void Awake()
     {
@@ -24,6 +24,13 @@ public class ButtonCustom : MonoBehaviour
 
     public void SetAction(UnityAction action)
     {
+        Trace.Log("Button Custom - Action: ");
         button.onClick.AddListener(action);
+    }
+
+    public void SetText(string text)
+    {
+        buttonTextStr = text;
+        buttonTextLabel.text = buttonTextStr;
     }
 }

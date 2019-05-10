@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour {
 	public static int M_PAUSE 		    = 1;
 	public static int M_SETTINGS 	    = 2;
     public static int M_GAME_OVER       = 4;
+    public static int M_INTRO           = 5;
     
     private Dictionary<int, string> menuPrefabs;
 
@@ -30,6 +31,7 @@ public class MenuManager : MonoBehaviour {
             { M_PAUSE,              menusPath + "PauseMenu"         },
             { M_SETTINGS,           menusPath + "SettingsMenu"      },
             { M_GAME_OVER,          menusPath + "GameOverMenu"      },
+            { M_INTRO,              menusPath + "IntroMenu"         },
 		};	
     }
 

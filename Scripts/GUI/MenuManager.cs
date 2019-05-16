@@ -14,7 +14,6 @@ public class MenuManager : MonoBehaviour {
     private int currentScreenEntry;
     private GameObject currentScreen;
 
-    
     /// <summary>
     /// Setup the menus used for this game.
     /// </summary>

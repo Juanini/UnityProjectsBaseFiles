@@ -8,38 +8,28 @@ using GameEventSystem;
 public class MenuManager : MonoBehaviour {
 
 	public static MenuManager Ins;
-
-	// Menus
-    public static int M_MAIN_MENU 	    = 0;
-	public static int M_PAUSE 		    = 1;
-	public static int M_SETTINGS 	    = 2;
-    public static int M_GAME_OVER       = 4;
-    public static int M_INTRO           = 5;
     
     private Dictionary<int, string> menuPrefabs;
 
     private int currentScreenEntry;
     private GameObject currentScreen;
 
-    private string menusPath = "GUI/MenuPrefabs/";
-
-    public void CreateMenuDic()
+    
+    /// <summary>
+    /// Setup the menus used for this game.
+    /// </summary>
+    /// <param name="dictionary">Menus dictionary in this game.</param>
+    public void CreateMenuDic(Dictionary<int,string> dictionary)
     {
-        menuPrefabs = new Dictionary<int,string>()
-		{
-			{ M_MAIN_MENU,          menusPath + "MainMenu"          },
-            { M_PAUSE,              menusPath + "PauseMenu"         },
-            { M_SETTINGS,           menusPath + "SettingsMenu"      },
-            { M_GAME_OVER,          menusPath + "GameOverMenu"      },
-            { M_INTRO,              menusPath + "IntroMenu"         },
-		};	
+        Trace.Log("CreateMenuDic");
+        menuPrefabs = new Dictionary<int, string>();
+        menuPrefabs = dictionary;
     }
 
     private void Awake()
     {
         Ins = this;
         GameEventManager.StartListening(GameEvents.E_OPEN_SCREEN, OnOpenScreenRequest);
-        MenuManager.Ins.CreateMenuDic();
     }
 
 	void OnOpenScreenRequest(Hashtable param)
@@ -53,6 +43,18 @@ public class MenuManager : MonoBehaviour {
 
 	public void ShowMenu(int menu, bool hideMenuFlag = true)
     {        
+        if(menuPrefabs == null)
+        {
+            Trace.LogError("Menu Manager - Error with menus dictionary.");
+            return;
+        }
+
+        if(!menuPrefabs.ContainsKey(menu))
+        {
+            Trace.LogError("Menu Manager - Menus dictionary does not contains key: " + menu);
+            return;
+        }
+
         GameObject desiredScreen;
 		string prefabLocation = menuPrefabs[menu];
 		desiredScreen = (GameObject)Instantiate(Resources.Load(prefabLocation, typeof(GameObject)));

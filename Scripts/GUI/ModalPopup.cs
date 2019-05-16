@@ -20,8 +20,8 @@ public class ModalPopup : MonoBehaviour {
     [FoldoutGroup("Loading")] public GameObject loadingImag;
     [FoldoutGroup("Loading")] public float loadingSpeed;
     [FoldoutGroup("Loading")] public TextMeshProUGUI loadingText;
-
-    private const string LOADING_JUST_A_MOMENT_TEXT = "Just a moment";
+    [FoldoutGroup("Loading")] public float loadingMinWaitTime = 3;
+    private UnityAction loadingCompleteCallback;
 
     ////=====================================================================================================================================
     //// Main
@@ -43,9 +43,19 @@ public class ModalPopup : MonoBehaviour {
     ////=====================================================================================================================================
     //// Loading
 
-    public void ShowLoading(string text = LOADING_JUST_A_MOMENT_TEXT)
+    public void ShowLoading(string text = "Loading", UnityAction callback = null)
     {
-        loadingText.text = text;
         loadingMenu.SetActive(true);
+
+        if(callback != null)
+        {
+            loadingCompleteCallback = callback;
+            Invoke("OnLoadingMinWaitComplete", loadingMinWaitTime);
+        }
+    }
+
+    private void OnLoadingMinWaitComplete()
+    {
+        loadingCompleteCallback.Invoke();
     }
 }

@@ -26,11 +26,22 @@ public class ButtonCustom : MonoBehaviour
     {
         Trace.Log("Button Custom - Action: ");
         button.onClick.AddListener(action);
+        button.onClick.AddListener(ButtonSound);
     }
 
     public void SetText(string text)
     {
         buttonTextStr = text;
         buttonTextLabel.text = buttonTextStr;
+    }
+
+    public void SetInteractable(bool enabled)
+    {
+        button.interactable = enabled;
+    }
+
+    public void ButtonSound()
+    {
+        SoundManager.Ins.playGUISound();
     }
 }

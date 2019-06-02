@@ -31,6 +31,19 @@ public class Pool : MonoBehaviour {
       		}
     	}
 	}
+
+	public GameObject GetPooledObject() 
+	{
+		for (int i = 0; i < pooledObjects.Count; i++) 
+		{
+      		if (pooledObjects[i] != null && !pooledObjects[i].activeInHierarchy)  
+			{	
+        		return pooledObjects[i];
+      		}
+    	}
+
+		return null;
+	}
 	
   	public GameObject GetPooledObject(string tag) 
 	{

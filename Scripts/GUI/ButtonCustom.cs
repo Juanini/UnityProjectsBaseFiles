@@ -42,6 +42,6 @@ public class ButtonCustom : MonoBehaviour
 
     public void ButtonSound()
     {
-        SoundManager.Ins.playGUISound();
+        // SoundManager.Ins.playGUISound();
     }
 }

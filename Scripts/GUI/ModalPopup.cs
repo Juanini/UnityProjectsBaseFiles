@@ -7,7 +7,6 @@ using UnityEngine.Events;
 
 using TMPro;
 using GameEventSystem;
-using Unity.VectorGraphics;
 using System.IO;
 
 using Sirenix.OdinInspector;

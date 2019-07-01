@@ -10,7 +10,7 @@ using TMPro;
 
 public class ButtonCustom : MonoBehaviour
 {
-    [BoxGroup("Elements")] public Text buttonTextLabel;
+    [BoxGroup("Elements")] public TextMeshProUGUI buttonTextLabel;
 
     [BoxGroup("Properties")] public string buttonTextStr;
 

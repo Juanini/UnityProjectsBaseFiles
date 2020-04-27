@@ -5,7 +5,7 @@ public class FPSDisplay : MonoBehaviour {
 
 	float deltaTime = 0.0f;
 	public TextMeshProUGUI fpsLabel;
-	private string displayStr = " fps \nAthena MVP 1";
+	private string displayStr = " fps";
 
 	void Update()
 	{

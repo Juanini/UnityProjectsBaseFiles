@@ -13,4 +13,10 @@ public class Utils : MonoBehaviour
 
         return true;
     }
+
+    public static bool IsInMainWorld()
+    {
+        
+        return false;
+    }
 }

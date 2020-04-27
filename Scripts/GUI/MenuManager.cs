@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour {
 
     private void Awake()
     {
+        Trace.Log("MenuManager - Awake");
+
         Ins = this;
         GameEventManager.StartListening(GameEvents.E_OPEN_SCREEN, OnOpenScreenRequest);
     }

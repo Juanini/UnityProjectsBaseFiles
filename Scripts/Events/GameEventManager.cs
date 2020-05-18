@@ -99,7 +99,7 @@ namespace GameEventSystem
         public static void TriggerEvent(string eventName, 
                                         Hashtable eventParams = default(Hashtable))
         {
-            Trace.Log("GameEventManager - Trigger Event: " + eventName);
+            // Trace.Log("GameEventManager - Trigger Event: " + eventName);
             
             GameEvent thisEvent = null;
             if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))

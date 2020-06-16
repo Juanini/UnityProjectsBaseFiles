@@ -69,6 +69,21 @@ public class ModalPopup : MonoBehaviour {
         loadingCompleteCallback.Invoke();
     }
 
+    public void ShowConfirmationPopup(string _dialog)
+    {
+        this.dialogText.text = _dialog;
+        Achis.gameObject.SetActive(true);
+
+        yesButton.gameObject.SetActive (false);
+        noButton.gameObject.SetActive (false);
+
+        cancelButton.onClick.RemoveAllListeners();
+        cancelButton.onClick.AddListener (ClosePanel);
+        cancelButton.onClick.AddListener (TriggerButtonSound);
+
+        cancelButton.gameObject.SetActive (true);
+    }
+
     // * =====================================================================================================================================
     // * Popup
 
@@ -103,8 +118,8 @@ public class ModalPopup : MonoBehaviour {
         noButton.gameObject.SetActive (false);
         cancelButton.gameObject.SetActive (false);
 
-        yesButtonText.text = yesBttnString;
         noButtonText.text = noBttnString;
+        yesButtonText.text = yesBttnString;
 
         if(yesEvent != null)
         {
@@ -139,6 +154,18 @@ public class ModalPopup : MonoBehaviour {
             cancelButton.onClick.AddListener (TriggerButtonSound);
 
             cancelButton.gameObject.SetActive (true);
+        }
+
+        if(yesEvent != null && noEvent != null && cancelEvent != null)
+        {
+            yesButtonText.text = "Ok";
+            
+            yesButton.onClick.RemoveAllListeners();
+            yesButton.onClick.AddListener (yesEvent);
+
+            yesButton.onClick.AddListener (ClosePanel);
+            yesButton.onClick.AddListener (TriggerButtonSound);
+            yesButton.gameObject.SetActive (true);
         }
 
         this.dialogText.text = question;

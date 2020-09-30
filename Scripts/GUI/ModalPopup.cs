@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -24,6 +25,7 @@ public class ModalPopup : MonoBehaviour {
 
     [BoxGroup("Popup")] public GameObject askMenuContainer;
     [BoxGroup("Popup")] public GameObject Achis;
+    [BoxGroup("Popup")] public GameObject popupMenu;
     [BoxGroup("Popup")] public Button yesButton;
     [BoxGroup("Popup")] public TextMeshProUGUI yesButtonText;
     [BoxGroup("Popup")] public Button noButton;
@@ -73,6 +75,7 @@ public class ModalPopup : MonoBehaviour {
     {
         this.dialogText.text = _dialog;
         Achis.gameObject.SetActive(true);
+        popupMenu.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
 
         yesButton.gameObject.SetActive (false);
         noButton.gameObject.SetActive (false);
@@ -107,12 +110,8 @@ public class ModalPopup : MonoBehaviour {
 	{
         GameEventManager.TriggerEvent(GameEvents.COLLIDER_BLOCK_ON);
 
-        Trace.Log("Achis" + Achis == null ? "0" : "1");
-        Trace.Log("yesButton" + yesButton == null ? "0" : "1");
-        Trace.Log("noButton" + noButton == null ? "0" : "1");
-        Trace.Log("cancelButton" + cancelButton == null ? "0" : "1");
-
         Achis.gameObject.SetActive(true);
+        popupMenu.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
 
         yesButton.gameObject.SetActive (false);
         noButton.gameObject.SetActive (false);

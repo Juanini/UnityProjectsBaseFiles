@@ -117,8 +117,8 @@ public class ModalPopup : MonoBehaviour {
         noButton.gameObject.SetActive (false);
         cancelButton.gameObject.SetActive (false);
 
-        noButtonText.text = noBttnString;
-        yesButtonText.text = yesBttnString;
+        noButtonText.text = LangManager.Ins.GetText("UI_No");
+        yesButtonText.text = LangManager.Ins.GetText("UI_Yes");
 
         if(yesEvent != null)
         {

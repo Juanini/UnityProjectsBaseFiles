@@ -87,6 +87,17 @@ public class ModalPopup : MonoBehaviour {
         cancelButton.gameObject.SetActive (true);
     }
 
+    public void ShowNotificationPopup(string _dialog)
+    {
+        this.dialogText.text = _dialog;
+        Achis.gameObject.SetActive(true);
+        popupMenu.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
+
+        yesButton.gameObject.SetActive (false);
+        noButton.gameObject.SetActive (false);
+        cancelButton.gameObject.SetActive (false);
+    }
+
     // * =====================================================================================================================================
     // * Popup
 

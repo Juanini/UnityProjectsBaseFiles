@@ -12,6 +12,8 @@ using System.IO;
 
 using Sirenix.OdinInspector;
 
+using LifeIsTheGame;
+
 public class ModalPopup : MonoBehaviour {
 
     public static ModalPopup Instance;
@@ -46,8 +48,6 @@ public class ModalPopup : MonoBehaviour {
 
     public void ClosePanel()
     {
-        GameEventManager.TriggerEvent(GameEvents.COLLIDER_BLOCK_OFF);
-
         Achis.gameObject.SetActive(false);
         askMenuContainer.SetActive(false);
     }
@@ -119,8 +119,6 @@ public class ModalPopup : MonoBehaviour {
         bool showExit           = false,
         bool reverseButtonsOrder     = false) 
 	{
-        GameEventManager.TriggerEvent(GameEvents.COLLIDER_BLOCK_ON);
-
         Achis.gameObject.SetActive(true);
         popupMenu.transform.DOPunchScale(new Vector3(0.1f, 0.1f, 0.1f), 0.2f);
 
@@ -128,8 +126,8 @@ public class ModalPopup : MonoBehaviour {
         noButton.gameObject.SetActive (false);
         cancelButton.gameObject.SetActive (false);
 
-        noButtonText.text = LangManager.Ins.GetText("UI_No");
-        yesButtonText.text = LangManager.Ins.GetText("UI_Yes");
+        noButtonText.text = "No";
+        yesButtonText.text = "Yes";
 
         if(yesEvent != null)
         {
@@ -184,6 +182,6 @@ public class ModalPopup : MonoBehaviour {
 
     private void TriggerButtonSound()
 	{
-		AudioManager.Main.PlayNewSound(AudioConstants.AUDIO_GUI_CLICK);
+		
     }
 }

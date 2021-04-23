@@ -5,6 +5,8 @@ using UnityEngine;
 using GameEventSystem;
 using TMPro;
 
+using LifeIsTheGame;
+
 public class FPSDisplay : MonoBehaviour {
 
 	float deltaTime = 0.0f;

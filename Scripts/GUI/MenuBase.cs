@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using GameEventSystem;
 
+using LifeIsTheGame;
+
 public class MenuBase : MonoBehaviour {
 
     public void onEnterScreen()

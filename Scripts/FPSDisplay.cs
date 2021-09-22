@@ -5,8 +5,6 @@ using UnityEngine;
 using GameEventSystem;
 using TMPro;
 
-using LifeIsTheGame;
-
 public class FPSDisplay : MonoBehaviour {
 
 	float deltaTime = 0.0f;
@@ -15,7 +13,7 @@ public class FPSDisplay : MonoBehaviour {
 
 	void Awake()
 	{
-		GameEventManager.StartListening(GameEvents.FPS_TOGGLE, ToggleFPS);
+		// GameEventManager.StartListening(GameEvents.FPS_TOGGLE, ToggleFPS);
 	}
 
 	void Update()

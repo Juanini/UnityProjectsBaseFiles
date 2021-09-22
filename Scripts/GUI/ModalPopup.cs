@@ -12,8 +12,6 @@ using System.IO;
 
 using Sirenix.OdinInspector;
 
-using LifeIsTheGame;
-
 public class ModalPopup : MonoBehaviour {
 
     public static ModalPopup Instance;

@@ -14,8 +14,6 @@ public class MenuBase : MonoBehaviour {
         // Do basic logic for opening
         preActive();
         InitScreen();
-        Canvas aCanvas = gameObject.GetComponent<Canvas>();
-        aCanvas.worldCamera = Camera.main;
         
         gameObject.SetActive(true);
         postActive();

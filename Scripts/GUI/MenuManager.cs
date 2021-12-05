@@ -8,6 +8,8 @@ using GameEventSystem;
 public class MenuManager : MonoBehaviour {
 
 	public static MenuManager Ins;
+
+    public Canvas canvas;
     
     private Dictionary<int, string> menuPrefabs;
 
@@ -58,7 +60,7 @@ public class MenuManager : MonoBehaviour {
 
         GameObject desiredScreen;
 		string prefabLocation = menuPrefabs[menu];
-		desiredScreen = (GameObject)Instantiate(Resources.Load(prefabLocation, typeof(GameObject)));
+		desiredScreen = (GameObject)Instantiate(Resources.Load(prefabLocation, typeof(GameObject)), canvas.transform);
 		showMenu(ref desiredScreen, hideMenuFlag);
 		currentScreenEntry = menu;
         

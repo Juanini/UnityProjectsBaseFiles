@@ -92,6 +92,7 @@ namespace HannieEcho.UI
             }
 
             CheckEventSystem();
+            CheckSafeAreaHelper();
 
             // EventBuffer.Add<BlockInputEvent>(new BlockInputEvent());
 		    // EventBuffer.Register<BlockInputEvent>(OnBlockInputEvent);
@@ -111,6 +112,14 @@ namespace HannieEcho.UI
             {
                 eventSystem = FindObjectOfType<EventSystem>(true);
             }
+        }
+        
+        private void CheckSafeAreaHelper()
+        {
+            // if(safeAreaHelper == null)
+            // {
+            //     safeAreaHelper = FindObjectOfType<SafeAreaHelper>(true);
+            // }
         }
 
         // private void OnBlockInputEvent(IEvent evnt)

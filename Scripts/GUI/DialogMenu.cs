@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -28,17 +29,31 @@ namespace HannieEcho
 
         private Vector3 punchV = new Vector3(0.35f, 0.35f, 0.35f);
 
-        public void ShowDialog(string _text, int _position = GameConst.POS_UP)
+        public async UniTask ShowDialog(string _text, int _position = GameConst.POS_UP)
         {
+            switch (_position)
+            {
+                case GameConst.POS_UP:
+                    container.transform.position = posUp.transform.position;
+                    break;
+            }
+            
             container.gameObject.SetActive(true);
             container.transform.DOPunchScale(punchV, 0.23f);
-            SetText(_text);
+            await SetText(_text);
+        }
+        
+        public void HideDialog()
+        {
+            container.gameObject.SetActive(false);
         }
         
         [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
-        public async void SetText(string _text)
+        public async UniTask SetText(string _text)
         {
             if (dialogTextSequence.IsActive()) { dialogTextSequence.Kill(); }
+
+            StringBuilder dialogTextString = new StringBuilder(_text);
 
             nextButtonFullScreen.interactable = false;
             AudioManager.Ins.PlayTextSound(true);
@@ -51,7 +66,17 @@ namespace HannieEcho
             for (int i = 0; i < animator.textInfo.characterCount; ++i) 
             {
                 if (!animator.textInfo.characterInfo[i].isVisible) continue;
-                await UniTask.Delay(35);
+
+                // TODO: Make a pause
+                if (dialogText.textInfo.characterInfo[0].character == '_')
+                {
+                    await UniTask.Delay(65);    
+                }
+                else
+                {
+                    await UniTask.Delay(35);
+                }
+                
                 dialogTextSequence.Join(animator.DOFadeChar(i, 1, 0.05f));
                 dialogTextSequence.Join(animator.DOPunchCharScale(i, 0.33f, 0.23f).SetEase(Ease.InOutQuint));
             }

@@ -14,23 +14,28 @@ namespace HannieEcho
 {
     public class DialogMenu : UIView
     {
-        public GameObject container;
-        public TextMeshProUGUI dialogText;
-        public Button nextButton;
-        public Button nextButtonFullScreen;
+        [BoxGroup("Elements")] public GameObject container;
+        [BoxGroup("Elements")] public TextMeshProUGUI dialogText;
+        [BoxGroup("Elements")] public Button nextButton;
+        [BoxGroup("Elements")] public Button nextButtonFullScreen;
+        [BoxGroup("Elements")] public Image nextImage;
 
         private Sequence dialogTextSequence;
 
         private UnityAction nextClickCallback;
 
-        [BoxGroup("Positions")] public GameObject posUp; 
+        [BoxGroup("Positions")] public GameObject posUp;
         [BoxGroup("Positions")] public GameObject posCenter; 
         [BoxGroup("Positions")] public GameObject posDown;
 
         private Vector3 punchV = new Vector3(0.35f, 0.35f, 0.35f);
 
-        public async UniTask ShowDialog(string _text, int _position = GameConst.POS_UP)
+        public async UniTask ShowDialog(string _text, bool _enableNext = true, int _position = GameConst.POS_UP)
         {
+            nextImage.gameObject.SetActive(false);
+            nextButton.gameObject.SetActive(false);
+            nextButtonFullScreen.gameObject.SetActive(false);
+            
             switch (_position)
             {
                 case GameConst.POS_UP:
@@ -41,6 +46,10 @@ namespace HannieEcho
             container.gameObject.SetActive(true);
             container.transform.DOPunchScale(punchV, 0.23f);
             await SetText(_text);
+
+            nextImage.gameObject.SetActive(_enableNext);
+            nextButton.gameObject.SetActive(_enableNext);
+            nextButtonFullScreen.gameObject.SetActive(_enableNext);
         }
         
         public void HideDialog()

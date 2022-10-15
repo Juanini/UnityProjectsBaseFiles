@@ -28,7 +28,7 @@ namespace HannieEcho
         [BoxGroup("Positions")] public GameObject posCenter; 
         [BoxGroup("Positions")] public GameObject posDown;
 
-        private Vector3 punchV = new Vector3(0.35f, 0.35f, 0.35f);
+        private readonly Vector3 punchV = new Vector3(0.35f, 0.35f, 0.35f);
 
         public async UniTask ShowDialog(string _text, bool _enableNext = true, int _position = GameConst.POS_UP)
         {
@@ -46,6 +46,8 @@ namespace HannieEcho
             container.gameObject.SetActive(true);
             container.transform.DOPunchScale(punchV, 0.23f);
             await SetText(_text);
+            
+            await UniTask.Delay(500);
 
             nextImage.gameObject.SetActive(_enableNext);
             nextButton.gameObject.SetActive(_enableNext);

@@ -98,6 +98,7 @@ namespace HannieEcho
 
         public void OnNextClick()
         {
+            AudioManager.Ins.UIClickSound();
             nextClickCallback.Invoke();
         }
 

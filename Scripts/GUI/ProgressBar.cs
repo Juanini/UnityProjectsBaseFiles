@@ -43,6 +43,8 @@ public class ProgressBar : MonoBehaviour
         maxValue = _maxValue;
         incrementValue = (completePos.transform.localPosition.x - startPos.transform.localPosition.x) / maxValue;
         bar.transform.localPosition = startPos.transform.localPosition;
+        
+        ShowText();
     }
     
     [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]

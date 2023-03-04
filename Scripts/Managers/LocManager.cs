@@ -23,7 +23,7 @@ public class LocManager : MonoBehaviour
     // * 
 
     public static string GetText(string _key)
-    {        
+    {
         return I2.Loc.LocalizationManager.GetTranslation(_key);
     }
 

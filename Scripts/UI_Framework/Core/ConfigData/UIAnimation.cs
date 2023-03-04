@@ -9,13 +9,7 @@ namespace HannieEcho.UI.Data
 {
     public abstract class UIAnimation : ScriptableObject
     {
-        /// <summary>
-        /// Animate a view
-        /// </summary>
-        /// <param name="promise">Promise to invoke at completion</param>
-        /// <param name="view">reference of the view to control</param>
-        /// <returns></returns>
-        public abstract IEnumerator Animate(UIView view);
+        public abstract UniTask Animate(UIView view);
         public abstract void Init();
         public abstract UniTask AfterScreenInit();
 

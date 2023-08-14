@@ -16,6 +16,11 @@ public class DataManager : MonoBehaviour
         Ins = this;
     }
 
+    public bool DataExists(string key)
+    {
+        return ES3.KeyExists(key);
+    }
+
     // * =====================================================================================================================================
     // * INT
 

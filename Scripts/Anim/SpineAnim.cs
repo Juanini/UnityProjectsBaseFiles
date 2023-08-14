@@ -91,6 +91,8 @@ public class SpineAnim : MonoBehaviour
 	{
 		if (doTransition)
 		{
+			Trace.Log("DOING TRANSITION");
+			
 			Spine.Animation transition = null;
 			Spine.Animation current = null;
 

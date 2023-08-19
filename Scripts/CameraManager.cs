@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Com.LuisPedroFonseca.ProCamera2D;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
@@ -8,6 +9,7 @@ public class CameraManager : MonoBehaviour
     public static CameraManager Ins;
     
     public Camera cam;
+    public ProCamera2D proCamera2D;
     
     void Awake()
     {
@@ -21,4 +23,21 @@ public class CameraManager : MonoBehaviour
             .SetEase(Ease.InOutExpo)
             .AsyncWaitForCompletion();
     }
+    
+    // * =====================================================================================================================================
+    // * 
+
+    #region ProCamera2D
+
+    public void DisableProCamera()
+    {
+        proCamera2D.enabled = false;
+    }
+    
+    public void EnableProCamera()
+    {
+        proCamera2D.enabled = true;
+    }
+
+    #endregion
 }

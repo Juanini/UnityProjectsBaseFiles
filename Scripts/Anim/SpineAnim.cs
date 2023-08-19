@@ -119,8 +119,17 @@ public class SpineAnim : MonoBehaviour
 	}
 
 	/// <summary>Play a non-looping animation once then continue playing the state animation.</summary>
-	public void PlayOneShot (Spine.Animation oneShot, int layerIndex) 
+	public void PlayOneShot (string id, int layerIndex)
 	{
+		Spine.Animation oneShot = null;
+		
+		foreach (var stateNameToAnimationReference in statesAndAnimations)
+		{
+			if (stateNameToAnimationReference.stateName == id)
+			{
+				oneShot = stateNameToAnimationReference.animation;
+			}
+		}
 		var state = skeletonAnimation.AnimationState;
 		state.SetAnimation(0, oneShot, false);
 

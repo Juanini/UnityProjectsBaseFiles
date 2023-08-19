@@ -4,12 +4,16 @@ using Com.LuisPedroFonseca.ProCamera2D;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
+using Sirenix.OdinInspector;
+
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager Ins;
     
     public Camera cam;
-    public ProCamera2D proCamera2D;
+    
+    [BoxGroup("ProCamera2D")] public ProCamera2D proCamera2D;
+    [BoxGroup("ProCamera2D")] public ProCamera2DPanAndZoom panAndZoom;
     
     void Awake()
     {
@@ -37,6 +41,16 @@ public class CameraManager : MonoBehaviour
     public void EnableProCamera()
     {
         proCamera2D.enabled = true;
+    }
+    
+    public void DisablePanAndZoomScript()
+    {
+        panAndZoom.enabled = false;
+    }
+    
+    public void EnablePanAndZoomScript()
+    {
+        panAndZoom.enabled = true;
     }
 
     #endregion

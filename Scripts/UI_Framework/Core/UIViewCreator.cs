@@ -46,11 +46,11 @@ namespace HannieEcho.UI
             RectTransform viewRT = (RectTransform)view.transform;
 
             view.gameObject.SetActive(false);
-            viewRT.SetAnchorsSize(view.anchorControl.Size, AnchorsCoordinateSystem.AsChildOfCanvas, true);
-            viewRT.SetAnchorsPosition(view.anchorControl.Position, AnchorsCoordinateSystem.AsChildOfCanvas, true);
-
-            viewRT.SetSize(view.rectControl.Size, CoordinateSystem.AsChildOfCanvasNormalized, true);
-            viewRT.SetPosition(view.rectControl.Position, CoordinateSystem.AsChildOfCanvasNormalized, true);
+            // viewRT.SetAnchorsSize(view.anchorControl.Size, AnchorsCoordinateSystem.AsChildOfCanvas, true);
+            // viewRT.SetAnchorsPosition(view.anchorControl.Position, AnchorsCoordinateSystem.AsChildOfCanvas, true);
+            //
+            // viewRT.SetSize(view.rectControl.Size, CoordinateSystem.AsChildOfCanvasNormalized, true);
+            // viewRT.SetPosition(view.rectControl.Position, CoordinateSystem.AsChildOfCanvasNormalized, true);
 
             return view;
         }

@@ -14,6 +14,7 @@ public class CameraManager : MonoBehaviour
     
     [BoxGroup("ProCamera2D")] public ProCamera2D proCamera2D;
     [BoxGroup("ProCamera2D")] public ProCamera2DPanAndZoom panAndZoom;
+    [BoxGroup("ProCamera2D")] public ProCamera2DNumericBoundaries numericBoundaries;
     
     void Awake()
     {
@@ -51,6 +52,16 @@ public class CameraManager : MonoBehaviour
     public void EnablePanAndZoomScript()
     {
         panAndZoom.enabled = true;
+    }
+    
+    public void DisableNumericBoundariesScript()
+    {
+        numericBoundaries.enabled = false;
+    }
+    
+    public void EnableNumericBoundariesScript()
+    {
+        numericBoundaries.enabled = true;
     }
 
     #endregion

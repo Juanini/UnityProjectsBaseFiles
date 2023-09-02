@@ -15,6 +15,8 @@ public class CameraManager : MonoBehaviour
     [BoxGroup("ProCamera2D")] public ProCamera2D proCamera2D;
     [BoxGroup("ProCamera2D")] public ProCamera2DPanAndZoom panAndZoom;
     [BoxGroup("ProCamera2D")] public ProCamera2DNumericBoundaries numericBoundaries;
+    [BoxGroup("ProCamera2D")] public ProCamera2DContentFitter contentFitter;
+    
 
     void Awake()
     {

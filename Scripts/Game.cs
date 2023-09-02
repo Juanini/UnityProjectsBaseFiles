@@ -43,4 +43,9 @@ public class Game : MonoBehaviour
         int randomIndex = Random.Range(0, array.Length);
         return array[randomIndex];
     }
+    
+    public static string IntToStringWithCommas(int num)
+    {
+        return $"{num:N0}";
+    }
 }

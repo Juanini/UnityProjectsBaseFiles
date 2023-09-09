@@ -23,6 +23,11 @@ public class CameraManager : MonoBehaviour
         Ins = this;
     }
 
+    public void ResetZoom()
+    {
+        cam.orthographicSize = 15;
+    }
+
     public async UniTask DoZoom(float _zoomValue, float _time)
     {
         await cam

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameEventSystem;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 public class Game : MonoBehaviour
@@ -10,11 +11,13 @@ public class Game : MonoBehaviour
     public static void BlockInput()
     {
         GameEventManager.TriggerEvent(GameEvents.BLOCK_INPUT);
+        // EventSystem.current.enabled = false;
     }
     
     public static void ReleaseInput()
     {
         GameEventManager.TriggerEvent(GameEvents.RELEASE_INPUT);
+        // EventSystem.current.enabled = true;
     }
 
     public static string GetDateAndTime()

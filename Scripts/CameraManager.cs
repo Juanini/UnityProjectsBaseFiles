@@ -39,6 +39,19 @@ public class CameraManager : MonoBehaviour
     // * =====================================================================================================================================
     // * 
 
+    public void FocusOnObject(Transform _transform)
+    {
+        proCamera2D.AddCameraTarget(_transform);
+    }
+    
+    public void StopFocusingOnObject()
+    {
+        proCamera2D.RemoveAllCameraTargets();
+    }
+
+    // * =====================================================================================================================================
+    // * 
+
     #region ProCamera2D
 
     public void DisableProCamera()

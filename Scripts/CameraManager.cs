@@ -38,6 +38,40 @@ public class CameraManager : MonoBehaviour
     // * =====================================================================================================================================
     // * 
 
+    public async UniTask CenterCameraToObject(Transform _transform, float _time = 0.25f)
+    {
+        proCamera2D.enabled = false;
+        Achis();
+        
+        var pos = _transform.position;
+        pos.z = -10;
+        
+        await cam.transform.DOMove(pos, _time).AsyncWaitForCompletion();
+
+        ProCamera2D.Instance.MoveCameraInstantlyToPosition(_transform.position);
+        EnablePanAndZoomScript();
+        ProCamera2D.Instance.enabled = true;
+    
+        ProCamera2D.Instance.Reset(true, false, false);
+        ProCamera2D.Instance.ResetMovement();
+    }
+
+    public void Achis()
+    {
+        DisablePanAndZoomScript();
+        DisableNumericBoundariesScript();
+        
+        ProCamera2D.Instance.GetComponent<ProCamera2DPanAndZoom>().DOKill(true);
+        ProCamera2D.Instance.enabled = false;
+    }
+    
+    public void CenterInFrontOfCamera(GameObject objectToCenter)
+    {
+        if (objectToCenter == null) return;
+        Vector3 cameraPosition = cam.transform.position;
+        objectToCenter.transform.position = new Vector3(cameraPosition.x, cameraPosition.y, objectToCenter.transform.position.z);
+    }
+
     public void FocusOnObject(Transform _transform)
     {
         proCamera2D.AddCameraTarget(_transform);

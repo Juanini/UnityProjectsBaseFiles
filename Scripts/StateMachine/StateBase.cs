@@ -1,19 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public abstract class BaseState<EState> where EState : Enum
+public abstract class StateBase<EState> where EState : Enum
 {
-    public BaseState(EState _key)
+    public StateBase(EState _key)
     {
         StateKey = _key;
     }
     
     public EState StateKey { get; private set; }
 
-    public abstract void EnterState();
-    public abstract void ExitState();
+    public abstract UniTask EnterState();
+    public abstract UniTask ExitState();
     public abstract void UpdateState();
     public abstract EState GetNextState();
     

@@ -6,28 +6,25 @@ using Cysharp.Threading.Tasks;
 public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 {
     protected Dictionary<EState, StateBase<EState>> States = new Dictionary<EState, StateBase<EState>>();
-    protected StateBase<EState> current;
+    protected StateBase<EState> stateActive;
 
     protected bool isTransitioningState = false;
-    
-    // void Start()
-    // {
-    //     UniTask.ToCoroutine(EnterInitialState);
-    // }
-    
+
     private async UniTask EnterInitialState()
     {
-        await current.EnterState();
+        await stateActive.EnterState();
     }
 
     // Update is called once per frame
     void Update()
     {
-        EState nextStateKey = current.GetNextState();
+        if (stateActive == null) { return; }
+        
+        EState nextStateKey = stateActive.GetNextState();
 
-        if (!isTransitioningState && nextStateKey.Equals(current.StateKey))
+        if (!isTransitioningState && nextStateKey.Equals(stateActive.StateKey))
         {
-            current.UpdateState();
+            stateActive.UpdateState();
         }
         else if(!isTransitioningState)
         {
@@ -39,9 +36,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     {
         isTransitioningState = true;
     
-        await current.ExitState();
-        current = States[_newState];
-        await current.EnterState();
+        await stateActive.ExitState();
+        stateActive = States[_newState];
+        await stateActive.EnterState();
 
         isTransitioningState = false;
     }

@@ -10,6 +10,18 @@ public abstract class StateBase<EState> where EState : Enum
     {
         StateKey = _key;
     }
+
+    private object storedReference;
+    
+    public void InitState<T>(T _classReference) where T : class
+    {
+        storedReference = _classReference;
+    }
+    
+    public T GetMainClassReference<T>() where T : class
+    {
+        return storedReference as T;
+    }
     
     public EState StateKey { get; private set; }
 

@@ -1,27 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 {
-    protected Dictionary<EState, BaseState<EState>> States = new Dictionary<EState, BaseState<EState>>();
-    protected BaseState<EState> CurrentState;
+    protected Dictionary<EState, StateBase<EState>> States = new Dictionary<EState, StateBase<EState>>();
+    protected StateBase<EState> stateActive;
 
     protected bool isTransitioningState = false;
-    
-    void Start()
+
+    private async UniTask EnterInitialState()
     {
-        CurrentState.EnterState();
+        await stateActive.EnterState();
     }
 
     // Update is called once per frame
     void Update()
     {
-        EState nextStateKey = CurrentState.GetNextState();
+        if (stateActive == null) { return; }
+        
+        EState nextStateKey = stateActive.GetNextState();
 
-        if (!isTransitioningState && nextStateKey.Equals(CurrentState.StateKey))
+        if (!isTransitioningState && nextStateKey.Equals(stateActive.StateKey))
         {
-            CurrentState.UpdateState();
+            stateActive.UpdateState();
         }
         else if(!isTransitioningState)
         {
@@ -29,29 +32,14 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         }
     }
 
-    public void TransitionToState(EState _newState)
+    public async void TransitionToState(EState _newState)
     {
         isTransitioningState = true;
-        
-        CurrentState.ExitState();
-        CurrentState = States[_newState];
-        CurrentState.EnterState();
+    
+        await stateActive.ExitState();
+        stateActive = States[_newState];
+        await stateActive.EnterState();
 
         isTransitioningState = false;
-    }
-
-    private void OnTriggerEnter(Collider _other)
-    {
-        CurrentState.OnTriggerEnter(_other);
-    }
-    
-    private void OnTriggerStay(Collider _other)
-    {
-        CurrentState.OnTriggerEnter(_other);
-    }
-    
-    private void OnTriggerExit(Collider _other)
-    {
-        CurrentState.OnTriggerEnter(_other);
     }
 }

@@ -10,7 +10,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     protected bool isTransitioningState = false;
 
-    private async UniTask EnterInitialState(StateBase<EState> _state)
+    public async UniTask EnterInitialState(StateBase<EState> _state)
     {
         stateActive = _state;
         await stateActive.EnterState();
@@ -26,16 +26,10 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
     void Update()
     {
         if (stateActive == null) { return; }
-        
-        EState nextStateKey = stateActive.GetNextState();
 
-        if (!isTransitioningState && nextStateKey.Equals(stateActive.StateKey))
+        if (!isTransitioningState)
         {
             stateActive.UpdateState();
-        }
-        else if(!isTransitioningState)
-        {
-            TransitionToState(nextStateKey);
         }
     }
 

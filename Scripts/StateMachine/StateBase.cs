@@ -11,16 +11,16 @@ public abstract class StateBase<EState> where EState : Enum
         StateKey = _key;
     }
 
-    private object storedReference;
+    private object mainClassRef;
     
     public void InitState<T>(T _classReference) where T : class
     {
-        storedReference = _classReference;
+        mainClassRef = _classReference;
     }
     
     public T GetMainClassReference<T>() where T : class
     {
-        return storedReference as T;
+        return mainClassRef as T;
     }
     
     public EState StateKey { get; private set; }
@@ -28,5 +28,4 @@ public abstract class StateBase<EState> where EState : Enum
     public abstract UniTask EnterState();
     public abstract UniTask ExitState();
     public abstract void UpdateState();
-    public abstract EState GetNextState();
 }

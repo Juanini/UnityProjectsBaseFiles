@@ -10,9 +10,16 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     protected bool isTransitioningState = false;
 
-    private async UniTask EnterInitialState()
+    private async UniTask EnterInitialState(StateBase<EState> _state)
     {
+        stateActive = _state;
         await stateActive.EnterState();
+    }
+
+    public void AddState<T>(EState stateKey, StateBase<EState> state, T mainClasRef) where T : class
+    {
+        state.InitState(mainClasRef);
+        States.Add(stateKey, state);
     }
 
     // Update is called once per frame

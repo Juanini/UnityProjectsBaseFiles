@@ -10,10 +10,10 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     protected bool isTransitioningState = false;
     
-    void Start()
-    {
-        UniTask.ToCoroutine(EnterInitialState);
-    }
+    // void Start()
+    // {
+    //     UniTask.ToCoroutine(EnterInitialState);
+    // }
     
     private async UniTask EnterInitialState()
     {
@@ -44,20 +44,5 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         await current.EnterState();
 
         isTransitioningState = false;
-    }
-
-    private void OnTriggerEnter(Collider _other)
-    {
-        current.OnTriggerEnter(_other);
-    }
-    
-    private void OnTriggerStay(Collider _other)
-    {
-        current.OnTriggerEnter(_other);
-    }
-    
-    private void OnTriggerExit(Collider _other)
-    {
-        current.OnTriggerEnter(_other);
     }
 }

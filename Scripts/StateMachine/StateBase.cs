@@ -17,9 +17,4 @@ public abstract class StateBase<EState> where EState : Enum
     public abstract UniTask ExitState();
     public abstract void UpdateState();
     public abstract EState GetNextState();
-    
-    public abstract void OnTriggerEnter(Collider _collider);
-    public abstract void OnTriggerStay(Collider _collider);
-    public abstract void OnTriggerExit(Collider _collider);
-    
 }

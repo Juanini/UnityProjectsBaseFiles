@@ -11,7 +11,7 @@ public abstract class StateBase<EState> where EState : Enum
         StateKey = _key;
     }
 
-    private object mainClassRef;
+    protected object mainClassRef;
     
     public void InitState<T>(T _classReference) where T : class
     {

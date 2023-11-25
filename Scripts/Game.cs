@@ -51,4 +51,19 @@ public class Game : MonoBehaviour
     {
         return $"{num:N0}";
     }
+
+    public static void SetFacingDirection(Transform _transform, Direction _direction)
+    {
+        var scale = _transform.localScale;
+        
+        var scaleValue = _direction switch
+        {
+            Direction.RIGHT => 1,
+            Direction.LEFT => -1,
+            _ => 1
+        };
+
+        scale.x = scaleValue;
+        _transform.localScale = scale;
+    }
 }

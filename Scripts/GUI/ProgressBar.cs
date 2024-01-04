@@ -82,7 +82,7 @@ public class ProgressBar : MonoBehaviour
         UnityAction _updateCallback = null,
         Ease _ease = Ease.InOutQuint)
     {
-        if(value + _value > maxValue) { return; }
+        if(value + _value > maxValue || value + _value < 0) { return; }
 
         DOTween.To(()=> value, x=> value = x, value + _value, _time)
             .OnUpdate(OnValueUpdate)

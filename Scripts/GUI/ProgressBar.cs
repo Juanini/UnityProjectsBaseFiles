@@ -35,14 +35,24 @@ public class ProgressBar : MonoBehaviour
     }
     
     [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
-    public void SetupBar(int _maxValue)
+    public void SetupBar(int _maxValue, bool setFull = false)
     {
         Trace.Log("Progress Bar - SetupBar - Max Value: " + _maxValue);
         
         DOTween.Kill(bar.transform);
         maxValue = _maxValue;
+
+        if (setFull)
+        {
+            value = maxValue;
+            bar.transform.localPosition = completePos.transform.localPosition;
+        }
+        else
+        {
+            bar.transform.localPosition = startPos.transform.localPosition;
+        }
+        
         incrementValue = (completePos.transform.localPosition.x - startPos.transform.localPosition.x) / maxValue;
-        bar.transform.localPosition = startPos.transform.localPosition;
         
         ShowText();
     }
@@ -60,7 +70,7 @@ public class ProgressBar : MonoBehaviour
             .OnComplete(OnValueComplete)
             .SetEase(Ease.Linear);
 
-        bar.transform.DOLocalMove(new Vector3(bar.transform.localPosition.x + (incrementValue * (_value - value)), 0, 0), _time)
+        bar.transform.DOLocalMove(new Vector3(bar.transform.localPosition.x + (incrementValue * (value)), 0, 0), _time)
                      .SetEase(_ease);
 
         updateCall = _updateCallback;
@@ -79,12 +89,13 @@ public class ProgressBar : MonoBehaviour
             .OnComplete(OnValueComplete)
             .SetEase(Ease.Linear);
 
-        bar.transform.DOLocalMove(new Vector3(bar.transform.localPosition.x + (incrementValue * (_value - value)), 0, 0), _time)
+        bar.transform.DOLocalMove(new Vector3(bar.transform.localPosition.x + (incrementValue * (_value)), 0, 0), _time)
             .SetEase(_ease);
 
         updateCall = _updateCallback;
     }
 
+    [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
     public void SetValue(int _value)
     {
         Trace.Log("Progress Bar - SetValue - Max Value: " + _value);

@@ -1,8 +1,6 @@
 ﻿
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using GameEventSystem;
 using TMPro;
 
 public class FPSDisplay : MonoBehaviour {

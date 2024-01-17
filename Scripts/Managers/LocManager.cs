@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using GameEventSystem;
 using I2.Loc;
 using UnityEngine;

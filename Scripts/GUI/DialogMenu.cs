@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using HannieEcho.UI;

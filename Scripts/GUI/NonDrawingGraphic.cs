@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 /// A concrete subclass of the Unity UI `Graphic` class that just skips drawing.
 /// Useful for providing a raycast target without actually drawing anything.

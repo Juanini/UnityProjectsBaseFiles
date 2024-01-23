@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-
-using TMPro;
 
 [System.Serializable]
 public class ObjectPoolItem 

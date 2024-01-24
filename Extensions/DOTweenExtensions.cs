@@ -19,6 +19,11 @@ public static class DOTweenExtensions
         return DOTween.To(() => polygon.Color, x => polygon.Color = x, endValue, duration);
     }
     
+    public static Tweener DoColor(this Disc polygon, Color endValue, float duration)
+    {
+        return DOTween.To(() => polygon.Color, x => polygon.Color = x, endValue, duration);
+    }
+    
     public static Sequence DoMoveVerticallyAndBack(this Transform transform, float moveDistance, float duration)
     {
         Vector3 originalPosition = transform.position;

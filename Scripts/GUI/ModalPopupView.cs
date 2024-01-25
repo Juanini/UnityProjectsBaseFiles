@@ -69,7 +69,7 @@ public class ModalPopupView : UIView
     
     public void ClosePanel()
     {
-        UI.Ins.uiNavigation.HideNavLastView();
+        // UI.Ins.nav.HideNavLastView();
     }
     
     private void TriggerButtonSound()

@@ -24,6 +24,11 @@ public static class DOTweenExtensions
         return DOTween.To(() => polygon.Color, x => polygon.Color = x, endValue, duration);
     }
     
+    public static Tweener DoRadius(this Disc disc, float endValue, float duration)
+    {
+        return DOTween.To(() => disc.Radius, x => disc.Radius = x, endValue, duration);
+    }
+    
     public static Sequence DoMoveVerticallyAndBack(this Transform transform, float moveDistance, float duration)
     {
         Vector3 originalPosition = transform.position;

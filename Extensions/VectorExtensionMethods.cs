@@ -29,6 +29,16 @@ public static class VectorExtensionMethods {
 	public static Vector3 WithZ(this Vector2 v, float z) {
 		return new Vector3(v.x, v.y, z);
         }
+	
+	public static Vector3 ToVector3(this float value)
+	{
+		return new Vector3(value, value, value);
+	}
+	
+	public static Vector2 ToVector2(this float value)
+	{
+		return new Vector2(value, value);
+	}
         
     // axisDirection - unit vector in direction of an axis (eg, defines a line that passes through zero)
 	// point - the point to find nearest on line for

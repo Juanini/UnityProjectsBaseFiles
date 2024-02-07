@@ -5,16 +5,19 @@ using Random = UnityEngine.Random;
 
 public class Game : MonoBehaviour
 {
+    private static bool isInputBlocked = false;
+    public static bool IsInputBlocked => isInputBlocked;
+
     public static void BlockInput()
     {
+        isInputBlocked = true;
         GameEventManager.TriggerEvent(GameEvents.BLOCK_INPUT);
-        // EventSystem.current.enabled = false;
     }
     
     public static void ReleaseInput()
     {
+        isInputBlocked = false;
         GameEventManager.TriggerEvent(GameEvents.RELEASE_INPUT);
-        // EventSystem.current.enabled = true;
     }
 
     public static string GetDateAndTime()

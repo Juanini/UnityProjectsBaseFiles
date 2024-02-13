@@ -62,14 +62,14 @@ public class ModalPopupView : UIView
 
         container.alpha = 0;
 
-        container.transform.position = new Vector3(transform1.x, transform1.y - 50, transform1.z);
+        container.transform.position = new Vector3(transform1.x, transform1.y - 3, transform1.z);
         container.transform.DOMove(originPos, animTime);
         container.DOFade(1, animTime);
     }
     
     public void ClosePanel()
     {
-        // UI.Ins.nav.HideNavLastView();
+        UI.Ins.uiNavigation.HideNavLastView();
     }
     
     private void TriggerButtonSound()

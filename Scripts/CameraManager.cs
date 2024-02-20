@@ -25,6 +25,17 @@ public class CameraManager : MonoBehaviour
     {
         cam.orthographicSize = 15;
     }
+    
+    public void ResetPosition()
+    {
+        DisableProCam();
+        cam.transform.position = new Vector3(0, 0, -10);
+        
+        ProCamera2D.Instance.enabled = true;
+    
+        ProCamera2D.Instance.Reset(true, false, false);
+        ProCamera2D.Instance.ResetMovement();
+    }
 
     public async UniTask DoZoom(float _zoomValue, float _time)
     {
@@ -40,7 +51,7 @@ public class CameraManager : MonoBehaviour
     public async UniTask CenterCameraToObject(Transform _transform, float _time = 0.25f)
     {
         proCamera2D.enabled = false;
-        Achis();
+        DisableProCam();
         
         var pos = _transform.position;
         pos.z = -10;
@@ -55,7 +66,7 @@ public class CameraManager : MonoBehaviour
         ProCamera2D.Instance.ResetMovement();
     }
 
-    public void Achis()
+    public void DisableProCam()
     {
         DisablePanAndZoomScript();
         DisableNumericBoundariesScript();

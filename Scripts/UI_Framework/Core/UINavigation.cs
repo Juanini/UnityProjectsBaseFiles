@@ -216,17 +216,18 @@ namespace HannieEcho.UI
             beforeShown?.Invoke((T)view);
             if (view.Status == ViewStatus.ACTIVE) return view;
 
-            UIView lastView = null;
-            if (m_NavigationPopUpStack.Count > 0)
-                lastView = m_NavigationPopUpStack.Peek();
+            // UIView lastView = null;
+            // if (m_NavigationPopUpStack.Count > 0)
+            //     lastView = m_NavigationPopUpStack.Peek();
 
             m_NavigationPopUpStack.Push(view);
 
             await view.Show(animated);
-            if (lastView) lastView.Hide();
+            // if (lastView) lastView.Hide();
 
             return view;
         }
+        
         public async UniTask<UIView> ShowPopupStacked<T>(bool animated = true, Action<T> beforeShown = null) where T : UIView
         {
             UIView view = GetOrCreateView<T>(ViewParentMode.POPUP);

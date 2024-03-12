@@ -1,12 +1,20 @@
 using System;
 using GameEventSystem;
+using PlayFab;
+using PlayFab.ClientModels;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Game : MonoBehaviour
 {
     private static bool isInputBlocked = false;
+    public static bool IsOnline { get; set; }
     public static bool IsInputBlocked => isInputBlocked;
+
+    private void Start()
+    {
+        InvokeRepeating(nameof(CheckForServerConnection),10, 3);
+    }
 
     public static void BlockInput()
     {
@@ -66,4 +74,24 @@ public class Game : MonoBehaviour
         scale.x = scaleValue;
         _transform.localScale = scale;
     }
+
+    private bool isCheckingConnection = false;
+    private bool previousConnectionStatus = false;
+    private async void CheckForServerConnection()
+    {
+        if (!isCheckingConnection)
+        {
+            isCheckingConnection = true;
+            previousConnectionStatus = IsOnline;
+            IsOnline = await PlayfabServerAPI.Ins.CanReachServer();
+            isCheckingConnection = false;
+
+            //If player suddenly switched from Offline to Online, attempt to login to Playfab.
+            if(!previousConnectionStatus && IsOnline)
+            {
+                PlayFabLogin.Ins.Init();
+            }
+        }
+    }
+
 }

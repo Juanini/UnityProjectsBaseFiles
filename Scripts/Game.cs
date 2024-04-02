@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using GameEventSystem;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -32,6 +33,15 @@ public class Game : MonoBehaviour
     {
         DateTime now = DateTime.Now;
         return now.ToString("yyyy-MM-dd HH:mm:ss");
+    }
+    
+    public static bool IsValidDate(string _date)
+    {
+        DateTime fecha;
+        string format = "yyyy-MM-dd HH:mm:ss";
+        CultureInfo culture = CultureInfo.InvariantCulture;
+        bool isValidDate = DateTime.TryParseExact(_date, format, culture, DateTimeStyles.None, out fecha);
+        return isValidDate;
     }
 
     public static double GetSecondsDifference(string _date)

@@ -24,5 +24,5 @@ public abstract class StateBase<EState> where EState : Enum
 
     public abstract UniTask EnterState();
     public abstract UniTask ExitState();
-    public abstract UniTask UpdateState();
+    public abstract void UpdateState();
 }

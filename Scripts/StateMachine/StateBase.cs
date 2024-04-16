@@ -8,16 +8,16 @@ public abstract class StateBase<EState> where EState : Enum
         StateKey = _key;
     }
 
-    protected object mainClassRef;
+    protected object context;
     
     public void InitState<T>(T _classReference) where T : class
     {
-        mainClassRef = _classReference;
+        context = _classReference;
     }
     
-    public T GetMainClassReference<T>() where T : class
+    public T GetContext<T>() where T : class
     {
-        return mainClassRef as T;
+        return context as T;
     }
     
     public EState StateKey { get; private set; }

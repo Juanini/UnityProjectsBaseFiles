@@ -90,6 +90,11 @@ namespace GameEventSystem
                 thisEvent.RemoveListener(listener);
             }
         }
+        
+        public static void StartListening(string eventName)
+        {
+            StartListening(eventName, null);
+        }
 
         public static void TriggerEvent(string eventName)
         {

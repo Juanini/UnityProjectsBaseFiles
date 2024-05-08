@@ -19,6 +19,7 @@ public class CameraManager : MonoBehaviour
     void Awake()
     {
         Ins = this;
+        cam = Camera.main;
     }
 
     public void ResetZoom()

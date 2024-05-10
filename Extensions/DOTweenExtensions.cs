@@ -39,4 +39,17 @@ public static class DOTweenExtensions
 
         return sequence;
     }
+    
+    public static Tweener DoFade(this Rectangle rectangle, float endAlpha, float duration)
+    {
+        var getter = new DOGetter<float>(() => rectangle.Color.a);
+        var setter = new DOSetter<float>(alpha =>
+        {
+            Color color = rectangle.Color;
+            color.a = alpha;
+            rectangle.Color = color;
+        });
+
+        return DOTween.To(getter, setter, endAlpha, duration);
+    }
 }

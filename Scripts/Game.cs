@@ -19,12 +19,14 @@ public class Game : MonoBehaviour
 
     public static void BlockInput()
     {
+        Trace.Log("GAME - BLOCK INPUT");
         isInputBlocked = true;
         GameEventManager.TriggerEvent(GameEvents.BLOCK_INPUT);
     }
     
     public static void ReleaseInput()
     {
+        Trace.Log("GAME - RELEASE INPUT");
         isInputBlocked = false;
         GameEventManager.TriggerEvent(GameEvents.RELEASE_INPUT);
     }

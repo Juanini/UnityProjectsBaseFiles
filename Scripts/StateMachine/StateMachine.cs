@@ -7,6 +7,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 {
     protected Dictionary<EState, StateBase<EState>> States = new Dictionary<EState, StateBase<EState>>();
     protected StateBase<EState> stateActive;
+    
+    public delegate void OnStateTransition(EState newState);
+    public event OnStateTransition StateTransitioned;
 
     protected bool isTransitioningState = false;
 
@@ -57,5 +60,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         await stateActive.EnterState();
 
         isTransitioningState = false;
+        
+        StateTransitioned?.Invoke(_newState);
     }
 }

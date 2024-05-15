@@ -14,6 +14,33 @@ public static class DOTweenExtensions
         return DOTween.To(getter, setter, endValue, duration);
     }
     
+    public static Sequence DoMoveVerticallyAndBack(this Transform transform, float moveDistance, float duration)
+    {
+        Vector3 originalPosition = transform.position;
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append(transform.DOMoveY(originalPosition.y + moveDistance, duration / 2))
+            .Append(transform.DOMoveY(originalPosition.y, duration / 2));
+
+        return sequence;
+    }
+    
+    // * =====================================================================================================================================
+    // * SHAPES
+    
+    public static Tweener DoFade(this Rectangle rectangle, float endAlpha, float duration)
+    {
+        var getter = new DOGetter<float>(() => rectangle.Color.a);
+        var setter = new DOSetter<float>(alpha =>
+        {
+            Color color = rectangle.Color;
+            color.a = alpha;
+            rectangle.Color = color;
+        });
+
+        return DOTween.To(getter, setter, endAlpha, duration);
+    }
+    
     public static Tweener DoColor(this Polygon polygon, Color endValue, float duration)
     {
         return DOTween.To(() => polygon.Color, x => polygon.Color = x, endValue, duration);
@@ -29,25 +56,14 @@ public static class DOTweenExtensions
         return DOTween.To(() => disc.Radius, x => disc.Radius = x, endValue, duration);
     }
     
-    public static Sequence DoMoveVerticallyAndBack(this Transform transform, float moveDistance, float duration)
+    public static Tweener DoFade(this Polyline polyline, float endAlpha, float duration)
     {
-        Vector3 originalPosition = transform.position;
-        Sequence sequence = DOTween.Sequence();
-
-        sequence.Append(transform.DOMoveY(originalPosition.y + moveDistance, duration / 2))
-            .Append(transform.DOMoveY(originalPosition.y, duration / 2));
-
-        return sequence;
-    }
-    
-    public static Tweener DoFade(this Rectangle rectangle, float endAlpha, float duration)
-    {
-        var getter = new DOGetter<float>(() => rectangle.Color.a);
+        var getter = new DOGetter<float>(() => polyline.Color.a);
         var setter = new DOSetter<float>(alpha =>
         {
-            Color color = rectangle.Color;
+            Color color = polyline.Color;
             color.a = alpha;
-            rectangle.Color = color;
+            polyline.Color = color;
         });
 
         return DOTween.To(getter, setter, endAlpha, duration);

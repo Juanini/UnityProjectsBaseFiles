@@ -1,6 +1,7 @@
 using DG.Tweening;
 using DG.Tweening.Core;
 using Shapes;
+using Spine.Unity;
 using UnityEngine;
 
 public static class DOTweenExtensions
@@ -23,6 +24,20 @@ public static class DOTweenExtensions
             .Append(transform.DOMoveY(originalPosition.y, duration / 2));
 
         return sequence;
+    }
+    
+    // * =====================================================================================================================================
+    // * SPINE
+    
+    public static Tweener DoFade(this SkeletonAnimation skeletonAnimation, float endAlpha, float duration)
+    {
+        Color startColor = skeletonAnimation.skeleton.GetColor();
+
+        return DOTween.To(() => startColor.a, x =>
+        {
+            startColor.a = x;
+            skeletonAnimation.skeleton.SetColor(startColor);
+        }, endAlpha, duration);
     }
     
     // * =====================================================================================================================================

@@ -83,4 +83,17 @@ public static class DOTweenExtensions
 
         return DOTween.To(getter, setter, endAlpha, duration);
     }
+    
+    public static Tweener DoFade(this Polygon polygon, float endAlpha, float duration)
+    {
+        var getter = new DOGetter<float>(() => polygon.Color.a);
+        var setter = new DOSetter<float>(alpha =>
+        {
+            Color color = polygon.Color;
+            color.a = alpha;
+            polygon.Color = color;
+        });
+
+        return DOTween.To(getter, setter, endAlpha, duration);
+    }
 }

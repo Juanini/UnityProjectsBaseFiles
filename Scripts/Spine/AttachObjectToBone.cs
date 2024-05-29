@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
@@ -26,6 +27,19 @@ public class AttachObjectToBone : MonoBehaviour
             Debug.LogError("Bone not found: " + boneName);
             return;
         }
+    }
+
+    public async void SetObjectToAttach(GameObject _gameObject)
+    {
+        await UniTask.WaitUntil(() => skeletonAnimation != null);
+        
+        objectToAttach = _gameObject;
+        SetupBone();
+    }
+
+    private void SetupBone()
+    {
+        bone = skeletonAnimation.skeleton.FindBone(boneName);
     }
 
     void LateUpdate()

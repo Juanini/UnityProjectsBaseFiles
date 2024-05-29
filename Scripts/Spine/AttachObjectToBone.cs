@@ -31,6 +31,7 @@ public class AttachObjectToBone : MonoBehaviour
     void LateUpdate()
     {
         if (bone == null) return;
+        if (objectToAttach == null) return;
         
         // Obtener la posición y rotación del hueso en el espacio del mundo
         Vector3 boneWorldPosition = skeletonAnimation.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));

@@ -26,6 +26,12 @@ public static class DOTweenExtensions
         return sequence;
     }
     
+    public static Tweener DOPunchScale(this Transform target, float punch, float duration)
+    {
+        Vector3 punchVector = new Vector3(punch, punch, punch);
+        return target.DOPunchScale(punchVector, duration);
+    }
+    
     // * =====================================================================================================================================
     // * SPINE
     

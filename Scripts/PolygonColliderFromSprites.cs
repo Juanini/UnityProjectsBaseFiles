@@ -10,21 +10,25 @@ public class PolygonColliderFromSprites : MonoBehaviour
         spriteRenderers = _spriteRenderers;
         CombineSpriteColliders();
     }
-    
+
+    public void RecalculatePolygon(List<SpriteRenderer> newSpriteRenderers)
+    {
+        spriteRenderers = newSpriteRenderers;
+        CombineSpriteColliders();
+    }
+
     private void CombineSpriteColliders()
     {
-        PolygonCollider2D polygonCollider = gameObject.AddComponent<PolygonCollider2D>();
-        polygonCollider.isTrigger = true;
-        
+        PolygonCollider2D polygonCollider = GetComponent<PolygonCollider2D>();
+        if (polygonCollider == null)
+        {
+            polygonCollider = gameObject.AddComponent<PolygonCollider2D>();
+        }
+
         List<Vector2> combinedPoints = new List<Vector2>();
 
         // Calculate the centroid of the selected sprite renderers
-        Vector2 centroid = Vector2.zero;
-        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-        {
-            centroid += (Vector2)spriteRenderer.transform.position;
-        }
-        centroid /= spriteRenderers.Count;
+        Vector2 centroid = CalculateCentroid(spriteRenderers);
 
         foreach (SpriteRenderer spriteRenderer in spriteRenderers)
         {
@@ -42,5 +46,16 @@ public class PolygonColliderFromSprites : MonoBehaviour
 
         // Position the game object at the centroid
         transform.position = centroid;
+    }
+
+    private Vector2 CalculateCentroid(List<SpriteRenderer> spriteRenderers)
+    {
+        Vector2 centroid = Vector2.zero;
+        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+        {
+            centroid += (Vector2)spriteRenderer.transform.position;
+        }
+        centroid /= spriteRenderers.Count;
+        return centroid;
     }
 }

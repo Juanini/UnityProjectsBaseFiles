@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]  // Se cambia a Collider2D para generalizar
 public class TouchDetector : MonoBehaviour, IPointerClickHandler
 {
     public delegate void TouchedAction(PointerEventData eventData);
     public event TouchedAction OnTouched;
 
-    private BoxCollider2D boxCollider2D;
+    private Collider2D collider2D;  // Cambio de BoxCollider2D a Collider2D
 
     private void Start()
     {
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        collider2D = GetComponent<Collider2D>();  // Obtiene cualquier tipo de Collider2D
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -21,11 +21,11 @@ public class TouchDetector : MonoBehaviour, IPointerClickHandler
 
     public void Enable()
     {
-        boxCollider2D.enabled = true;
+        collider2D.enabled = true;
     }
 
     public void Disable()
     {
-        boxCollider2D.enabled = false;
+        collider2D.enabled = false;
     }
 }

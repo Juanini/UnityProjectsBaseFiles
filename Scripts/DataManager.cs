@@ -158,4 +158,22 @@ public class DataManager : MonoBehaviour
 
         return new List<int>();
     }
+    
+    // * =====================================================================================================================================
+    // * 
+    
+    public void SaveDouble(string key, double value)
+    {
+        ES3.Save<double>(key, value);
+    }
+
+    public double LoadDouble(string key)
+    {
+        if(ES3.KeyExists(key))
+        {
+            return ES3.Load<double>(key);
+        }
+
+        return 0;
+    }
 }

@@ -164,7 +164,7 @@ public class DataManager : MonoBehaviour
     
     public void SaveDouble(string key, double value)
     {
-        ES3.Save<double>(key, value);
+        ES3.Save(key, value);
     }
 
     public double LoadDouble(string key)

@@ -95,9 +95,13 @@ public class ProgressBar : MonoBehaviour
     [Button(ButtonSizes.Large), GUIColor(0.4f, 0.8f, 1)]
     public void SetValue(int _value)
     {
-        Trace.Log("Progress Bar - SetValue - Max Value: " + _value);
-        
-        if(_value > maxValue) { return; }
+        // Trace.Log("Progress Bar - SetValue - Max Value: " + _value);
+
+        if (_value > maxValue)
+        {
+            bar.transform.localPosition = completePos.transform.localPosition;
+            return;
+        }
         
         bar.transform.localPosition = new Vector3(bar.transform.localPosition.x + (incrementValue * (_value - value)), 0, 0);
     }

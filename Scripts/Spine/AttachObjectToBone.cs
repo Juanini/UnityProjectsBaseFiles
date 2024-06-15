@@ -15,7 +15,7 @@ public class AttachObjectToBone : MonoBehaviour
     {
         if (skeletonAnimation == null || objectToAttach == null)
         {
-            Debug.LogError("SkeletonAnimation or ObjectToAttach is not assigned.");
+            // Debug.LogError("SkeletonAnimation or ObjectToAttach is not assigned.");
             return;
         }
 
@@ -24,7 +24,7 @@ public class AttachObjectToBone : MonoBehaviour
 
         if (bone == null)
         {
-            Debug.LogError("Bone not found: " + boneName);
+            // Debug.LogError("Bone not found: " + boneName);
             return;
         }
     }

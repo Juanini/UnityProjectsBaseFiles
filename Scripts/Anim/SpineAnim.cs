@@ -160,6 +160,25 @@ public class SpineAnim : MonoBehaviour
         state.AddAnimation(0, this.TargetAnimation, true, 0f);
     }
 
+    /// <summary>Play a non-looping animation once then continue playing the state animation with a different TimeScale.</summary>
+
+    public void PlayOneShotNoTransition(string id, int layerIndex, float speed = 1)
+    {
+        Spine.Animation oneShot = null;
+
+        foreach (var stateNameToAnimationReference in statesAndAnimations)
+        {
+            if (stateNameToAnimationReference.stateName == id)
+            {
+                oneShot = stateNameToAnimationReference.animation.Animation;
+            }
+        }
+        var state = skeletonAnimation != null ? skeletonAnimation.AnimationState : skeletonGraphic.AnimationState;
+        state.SetAnimation(0, oneShot, false);
+        state.GetCurrent(0).TimeScale = speed;
+        state.AddAnimation(0, this.TargetAnimation, true, 0f);
+    }
+
     Spine.Animation TryGetTransition (Spine.Animation from, Spine.Animation to) 
     {
         foreach (var transition in transitions) 

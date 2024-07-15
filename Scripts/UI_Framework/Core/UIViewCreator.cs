@@ -24,7 +24,7 @@ namespace HannieEcho.UI
             if (!m_Data) return null;
             if (!m_Data.ViewReferences.TryGetValue(viewType, out UIView view))
             {
-                Trace.Log($"The requested view could not be found: {viewType}.", typeof(UIViewCreator));
+                Trace.Log($"The requested view could not be found: " + typeof(UIViewCreator));
                 return null;
             }
             return view;
@@ -35,7 +35,7 @@ namespace HannieEcho.UI
             var viewCtrl = GetViewRef(viewType);
             if (viewCtrl == null)
             {
-                Trace.Log("Failed to get UIView", typeof(UIViewCreator));
+                Trace.Log("Failed to get UIView " + typeof(UIViewCreator));
                 return null;
             }
 

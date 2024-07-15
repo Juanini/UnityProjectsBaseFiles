@@ -32,7 +32,7 @@ public static class ValueRangeTranslate
         float res = (((valueToTranslate - range1Min) * (range2Max - range2Min)) / (range1Max - range1Min)) + range2Min;
         if (trowErrors && float.IsNaN(res))
         {
-            Trace.Log("ValueRangeTranslate error. Range 1 min cannot be the same than Range 1 max", typeof(ValueRangeTranslate));
+            Trace.Log("ValueRangeTranslate error. Range 1 min cannot be the same than Range 1 max " + typeof(ValueRangeTranslate));
         }
 		return res;
 	}
@@ -67,7 +67,7 @@ public static class ValueRangeTranslate
         float res = (((valueToTranslate - range1Min) * (range2Max - range2Min)) / (range1Max - range1Min)) + range2Min;
         if (trowErrors && float.IsNaN(res))
         {
-            Trace.Log("ValueRangeTranslate error. Range 1 min cannot be the same than Range 1 max", typeof(ValueRangeTranslate));
+            Trace.Log("ValueRangeTranslate error. Range 1 min cannot be the same than Range 1 max " + typeof(ValueRangeTranslate));
         }
         return res;
 	}

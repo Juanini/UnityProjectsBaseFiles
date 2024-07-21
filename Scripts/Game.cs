@@ -31,7 +31,7 @@ public class Game : MonoBehaviour
         GameEventManager.TriggerEvent(GameEvents.RELEASE_INPUT);
     }
 
-    public static string GetDateAndTime()
+    public static string GetDateAndTimeNow()
     {
         DateTime now = DateTime.Now;
         return now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -46,13 +46,56 @@ public class Game : MonoBehaviour
         return isValidDate;
     }
 
-    public static double GetSecondsDifference(string _date)
+    public static double GetSecondsDifferenceFromDateToNow(string _date)
     {
-        DateTime date1 = DateTime.Parse(_date);
-        DateTime date2 = DateTime.Parse(GetDateAndTime());
-        
+        DateTime date1;
+        if (!DateTime.TryParse(_date, out date1))
+        {
+            return 0;
+        }
+
+        DateTime date2 = DateTime.Parse(GetDateAndTimeNow());
+
         TimeSpan difference = date2.Subtract(date1);
         return difference.TotalSeconds;
+    }
+    
+    public static double GetSecondsDifferenceBetweenDates(string date1, string date2)
+    {
+        DateTime startDate;
+        DateTime endDate;
+        string format = "yyyy-MM-dd HH:mm:ss";
+        CultureInfo culture = CultureInfo.InvariantCulture;
+
+        if (DateTime.TryParseExact(date1, format, culture, DateTimeStyles.None, out startDate) &&
+            DateTime.TryParseExact(date2, format, culture, DateTimeStyles.None, out endDate))
+        {
+            TimeSpan difference = endDate.Subtract(startDate);
+            return difference.TotalSeconds;
+        }
+        else
+        {
+            Trace.Log("Invalid date format.");
+            return 0;
+        }
+    }
+    
+    public static string GetFutureDateFromSeconds(string startDate, int secondsToAdd)
+    {
+        DateTime date;
+        string format = "yyyy-MM-dd HH:mm:ss";
+        CultureInfo culture = CultureInfo.InvariantCulture;
+
+        if (DateTime.TryParseExact(startDate, format, culture, DateTimeStyles.None, out date))
+        {
+            date = date.AddSeconds(secondsToAdd);
+            return date.ToString(format);
+        }
+        else
+        {
+            Trace.Log("Invalid start date format.");
+            return string.Empty;
+        }
     }
 
     public static T GetRandomElementFromArray<T>(T[] array)

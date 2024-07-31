@@ -75,11 +75,11 @@ namespace HannieEcho.UI.Data
 
                     if (base.ViewReferences.ContainsKey(type))
                     {
-                        Trace.Log($"View asset type {type} already in collection... skipping");
+                        // Trace.Log($"View asset type {type} already in collection... skipping");
                         continue;
                     }
 
-                    Trace.Log($"Asset resource location loaded\n" + $"Asset info type: {type} , name: {viewComponent.gameObject.name}");
+                    // Trace.Log($"Asset resource location loaded\n" + $"Asset info type: {type} , name: {viewComponent.gameObject.name}");
                     ViewReferences.Add(type, viewComponent);
                 }
 

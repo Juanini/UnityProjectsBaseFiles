@@ -12,9 +12,19 @@ public class OffscreenObjectPointer : MonoBehaviour
     public RectTransform canvasRectTransform; // El RectTransform del canvas
     public Camera mainCamera; // La cámara principal que está en uso
 
+    public Button button;
+
     private void Start()
     {
         mainCamera = Camera.main;
+        button.onClick.AddListener(OnClick);
+    }
+
+    private async void OnClick()
+    {
+        Game.BlockInput();
+        await CamManager.Ins.CenterCameraToObject(target, 1.5f);
+        Game.ReleaseInput();
     }
 
     void Update()

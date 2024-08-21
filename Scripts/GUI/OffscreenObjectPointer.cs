@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,42 +6,69 @@ using UnityEngine.UI;
 
 public class OffscreenObjectPointer : MonoBehaviour
 {
-    public Transform target; // El objetivo
-    public Image pointer; // La imagen del puntero (círculo)
-    public Image arrow; // La imagen de la flecha
+    public Transform target; // El objetivo a seguir
+    public RectTransform pointer; // El RectTransform del pointer
+    public RectTransform arrow; // El RectTransform de la flecha, hijo del pointer
+    public RectTransform canvasRectTransform; // El RectTransform del canvas
+    public Camera mainCamera; // La cámara principal que está en uso
 
-    private Camera mainCamera;
-    private RectTransform pointerRectTransform;
-    private RectTransform arrowRectTransform;
-
-    void Start()
+    private void Start()
     {
         mainCamera = Camera.main;
-        pointerRectTransform = pointer.GetComponent<RectTransform>();
-        arrowRectTransform = arrow.GetComponent<RectTransform>();
     }
 
     void Update()
     {
+        if (target == null) { return; }
+        
+        if (IsTargetOnScreen())
+        {
+            pointer.gameObject.SetActive(false);
+        }
+        else
+        {
+            pointer.gameObject.SetActive(true);
+            UpdatePointerPositionAndRotation();
+        }
+    }
+
+    bool IsTargetOnScreen()
+    {
+        Vector3 worldPosition = target.position;
+        Vector3 screenPoint = mainCamera.WorldToViewportPoint(worldPosition);
+        
+        if (screenPoint.z < 0)
+        {
+            return false; // Si el objeto está detrás de la cámara, no está en pantalla
+        }
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, mainCamera.WorldToScreenPoint(worldPosition), mainCamera, out localPoint);
+
+        return canvasRectTransform.rect.Contains(localPoint);
+    }
+
+    void UpdatePointerPositionAndRotation()
+    {
         Vector3 screenPos = mainCamera.WorldToScreenPoint(target.position);
 
-        bool isOffScreen = screenPos.x <= 0 || screenPos.x >= Screen.width || screenPos.y <= 0 || screenPos.y >= Screen.height;
-
-        pointer.gameObject.SetActive(isOffScreen);
-        arrow.gameObject.SetActive(isOffScreen);
-
-        if (isOffScreen)
+        if (screenPos.z < 0)
         {
-            Vector3 cappedScreenPos = screenPos;
-
-            cappedScreenPos.x = Mathf.Clamp(cappedScreenPos.x, 0, Screen.width);
-            cappedScreenPos.y = Mathf.Clamp(cappedScreenPos.y, 0, Screen.height);
-
-            pointerRectTransform.position = cappedScreenPos;
-
-            Vector3 direction = target.position - mainCamera.transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            arrowRectTransform.rotation = Quaternion.Euler(0, 0, angle);
+            screenPos *= -1;
         }
+
+        Vector2 canvasPos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, mainCamera, out canvasPos);
+
+        Vector2 clampedPosition = canvasPos;
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, -canvasRectTransform.rect.width / 2 + pointer.rect.width / 2, canvasRectTransform.rect.width / 2 - pointer.rect.width / 2);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -canvasRectTransform.rect.height / 2 + pointer.rect.height / 2, canvasRectTransform.rect.height / 2 - pointer.rect.height / 2);
+
+        pointer.localPosition = clampedPosition;
+
+        Vector2 direction = target.position - mainCamera.transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // pointer.localRotation = Quaternion.Euler(0, 0, angle);
+        arrow.localRotation = Quaternion.Euler(0, 0, angle);
     }
 }

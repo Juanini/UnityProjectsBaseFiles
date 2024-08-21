@@ -37,14 +37,14 @@ public class DataManager : MonoBehaviour
         return 0;
     }
 
-    public void IncreaseInt(string key, int _amount)
+    public void IncreaseInt(string key, int _amount = 1)
     {
         int value = LoadInt(key);
         value += _amount;
         SaveInt(key, value);
     }
 
-    public void DecreaseInt(string key, int _amount)
+    public void DecreaseInt(string key, int _amount = 1)
     {
         int value = LoadInt(key);
         value -= _amount;

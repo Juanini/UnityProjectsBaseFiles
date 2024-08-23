@@ -23,7 +23,7 @@ public class OffscreenObjectPointer : MonoBehaviour
     private async void OnClick()
     {
         Game.BlockInput();
-        await CamManager.Ins.CenterCameraToObject(target, 1f);
+        await CamManager.Ins.CenterCameraToObject(target, 0.7f);
         Game.ReleaseInput();
     }
 

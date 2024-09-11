@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class OffscreenObjectPointer : MonoBehaviour
 {
-    public Transform target; // El objetivo a seguir
+    private Transform target; // El objetivo a seguir
     public RectTransform pointer; // El RectTransform del pointer
     public RectTransform arrow; // El RectTransform de la flecha, hijo del pointer
     public RectTransform canvasRectTransform; // El RectTransform del canvas
@@ -20,6 +20,13 @@ public class OffscreenObjectPointer : MonoBehaviour
         button.onClick.AddListener(OnClick);
     }
 
+    private bool isActive = false;
+    public void SetActive(bool _active)
+    {
+        isActive = _active;
+        pointer.gameObject.SetActive(_active);
+    }
+
     private async void OnClick()
     {
         Game.BlockInput();
@@ -29,7 +36,7 @@ public class OffscreenObjectPointer : MonoBehaviour
 
     void Update()
     {
-        if (target == null) { return; }
+        if (!isActive){ return; }
         
         if (IsTargetOnScreen())
         {
@@ -80,5 +87,11 @@ public class OffscreenObjectPointer : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         // pointer.localRotation = Quaternion.Euler(0, 0, angle);
         arrow.localRotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    public void SetTarget(Transform _target)
+    {
+        target = _target;
+        SetActive(true);
     }
 }

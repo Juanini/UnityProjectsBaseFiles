@@ -1,7 +1,8 @@
 using System;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
-public abstract class StateBase<EState> where EState : Enum
+public abstract class StateBase<EState> : MonoBehaviour where EState : Enum
 {
     public StateBase(EState _key)
     {

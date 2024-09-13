@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Sirenix.OdinInspector;
 
 public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 {
@@ -63,4 +64,14 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         
         StateTransitioned?.Invoke(_newState);
     }
+    
+    #if UNITY_EDITOR
+
+    [Button]
+    public void PrintCurrentState()
+    {
+        Trace.Log(this.name + " - " + "CURRENT STATE: " + GetCurrentState());
+    }
+            
+    #endif
 }

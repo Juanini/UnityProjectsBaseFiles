@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public static class ArrayExtensions
 {
@@ -8,10 +9,21 @@ public static class ArrayExtensions
     {
         if (array == null || array.Length == 0)
         {
-            throw new ArgumentException("Array cannot be null or empty");
+            Trace.LogError("Array cannot be null or empty");
         }
         
         int randomIndex = _random.Next(array.Length);
         return array[randomIndex];
+    }
+    
+    public static T GetRandomElement<T>(this List<T> list)
+    {
+        if (list == null || list.Count == 0)
+        {
+            Trace.LogError("List null or empty");
+            return default;
+        }
+        
+        return list[Random.Range(0, list.Count)];
     }
 }

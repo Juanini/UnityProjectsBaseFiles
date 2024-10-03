@@ -1,8 +1,6 @@
 using System;
 using System.Globalization;
 using GameEventSystem;
-using PlayFab;
-using PlayFab.ClientModels;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

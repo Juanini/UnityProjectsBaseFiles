@@ -36,9 +36,9 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         return null;
     }
 
-    public StateBase<EState> GetCurrentState()
+    public EState GetCurrentState()
     {
-        return stateActive;
+        return stateActive.StateKey;
     }
 
     // Update is called once per frame

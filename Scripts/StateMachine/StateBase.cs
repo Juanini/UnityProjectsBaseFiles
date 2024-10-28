@@ -11,9 +11,10 @@ public abstract class StateBase<EState> : MonoBehaviour where EState : Enum
 
     protected object context;
     
-    public void InitState<T>(T _classReference) where T : class
+    public void InitState<T>(T _classReference, EState _stateKey) where T : class
     {
         context = _classReference;
+        StateKey = _stateKey;
     }
     
     public T GetContext<T>() where T : class

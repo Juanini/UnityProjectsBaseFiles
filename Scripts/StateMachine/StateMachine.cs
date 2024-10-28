@@ -22,7 +22,8 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     public void AddState<T>(EState stateKey, StateBase<EState> state, T mainClasRef) where T : class
     {
-        state.InitState(mainClasRef);
+        Trace.Log(this.name + " - " + "Add State: " + stateKey);
+        state.InitState(mainClasRef, stateKey);
         States.Add(stateKey, state);
     }
 
@@ -38,6 +39,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     public EState GetCurrentState()
     {
+        Trace.Log(this.name + " - " + "GET CURRENT STATE: " + stateActive.StateKey);
         return stateActive.StateKey;
     }
 

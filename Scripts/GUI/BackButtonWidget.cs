@@ -1,14 +1,21 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BackButtonWidget : MonoBehaviour
 {
     public Button backButton;
     private bool isInitialized;
+    [SerializeField] private bool autoInit = false;
+    
+    private UnityEvent onBackClickEvent;
     
     private void Start()
     {
-        Init();
+        if (autoInit)
+        {
+            Init();
+        }
     }
 
     private void Init()
@@ -21,6 +28,19 @@ public class BackButtonWidget : MonoBehaviour
 
     private void OnBackClick()
     {
-        UI.Ins.uiNavigation.HideNavLastView();
+        if (onBackClickEvent != null && onBackClickEvent.GetPersistentEventCount() > 0)
+        {
+            onBackClickEvent.Invoke();
+        }
+        else
+        {
+            UI.Ins.uiNavigation.HideNavLastView();
+        }
+    }
+
+    public void SetOnBackClick(UnityAction action)
+    {
+        backButton.onClick.RemoveAllListeners();
+        backButton.onClick.AddListener(action);
     }
 }

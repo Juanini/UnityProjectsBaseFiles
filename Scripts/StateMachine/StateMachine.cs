@@ -54,12 +54,14 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
 
     public async void TransitionToState(EState _newState)
     {
+        Trace.Log("State Machine - Transition To State - Old State: " + stateActive.StateKey);
         isTransitioningState = true;
     
         await stateActive.ExitState();
         stateActive = States[_newState];
         await stateActive.EnterState();
 
+        Trace.Log("State Machine - Transition To State - New State: " + stateActive.StateKey);
         isTransitioningState = false;
         
         StateTransitioned?.Invoke(_newState);

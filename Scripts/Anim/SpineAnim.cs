@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
@@ -205,5 +206,63 @@ public class SpineAnim : MonoBehaviour
     int StringToHash (string s) 
     {
         return Animator.StringToHash(s);
+    }
+    
+    // * =====================================================================================================================================
+    // * 
+    
+    public void PlayAnimationForStateAtProgress(string stateShortName, int layerIndex, bool doTransition, float startPercentage)
+    {
+        PlayAnimationForStateAtProgress(StringToHash(stateShortName), layerIndex, doTransition, startPercentage);
+    }
+    
+    public void PlayAnimationForStateAtProgress(int shortNameHash, int layerIndex, bool doTransition, float startPercentage)
+    {
+        var foundAnimation = GetAnimationForState(shortNameHash);
+        if (foundAnimation == null)
+            return;
+    
+        PlayNewAnimationAtProgress(foundAnimation, layerIndex, doTransition, startPercentage);
+    }
+    
+    public void PlayNewAnimationAtProgress(Spine.Animation target, int layerIndex, bool doTransition, float startPercentage)
+    {
+        // Asegúrate de que el porcentaje esté dentro de los límites
+        startPercentage = Mathf.Clamp(startPercentage, 0f, 100f);
+    
+        var spineState = (skeletonAnimation != null) ? skeletonAnimation.AnimationState : skeletonGraphic.AnimationState;
+        TrackEntry finalTrackEntry = null;
+    
+        if (doTransition)
+        {
+            Spine.Animation transition = null;
+            Spine.Animation current = GetCurrentAnimation(layerIndex);
+            if (current != null)
+                transition = TryGetTransition(current, target);
+    
+            if (transition != null)
+            {
+                spineState.SetAnimation(layerIndex, transition, false);
+                finalTrackEntry = spineState.AddAnimation(layerIndex, target, true, 0f);
+            }
+            else
+            {
+                finalTrackEntry = spineState.SetAnimation(layerIndex, target, true);
+            }
+        }
+        else
+        {
+            finalTrackEntry = spineState.SetAnimation(layerIndex, target, true);
+        }
+    
+        this.TargetAnimation = target;
+    
+        // Calcula el tiempo inicial según el porcentaje
+        float startTime = target.Duration * (startPercentage / 100f);
+        if (finalTrackEntry != null)
+        {
+            // Asigna el tiempo inicial de la animación
+            finalTrackEntry.TrackTime = startTime;
+        }
     }
 }

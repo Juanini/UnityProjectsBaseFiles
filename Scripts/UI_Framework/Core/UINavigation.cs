@@ -395,5 +395,10 @@ namespace HannieEcho.UI
                 }
             }
         }
+        
+        public bool IsPopupActive()
+        {
+            return m_NavigationPopUpStack.Count > 0;
+        }
     }
 }

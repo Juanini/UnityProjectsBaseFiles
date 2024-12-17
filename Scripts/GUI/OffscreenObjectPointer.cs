@@ -37,6 +37,7 @@ public class OffscreenObjectPointer : MonoBehaviour
     void Update()
     {
         if (!isActive){ return; }
+        if(target == null) { return; }
         
         if (IsTargetOnScreen())
         {

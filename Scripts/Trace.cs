@@ -20,6 +20,12 @@ public class Trace : MonoBehaviour {
     {
         UnityEngine.Debug.LogError(string.Format(format, arguments));
     }
+    
+    [Conditional("USE_LOGS")]
+    public static void LogWarning(string format, params object[] arguments)
+    {
+        UnityEngine.Debug.LogWarning(string.Format(format, arguments));
+    }
 
     [Conditional("USE_LOGS")]
     public static void LogError(UnityEngine.Object context, string format, params object[] arguments)

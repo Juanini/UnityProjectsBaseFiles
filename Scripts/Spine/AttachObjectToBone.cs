@@ -9,6 +9,8 @@ public class AttachObjectToBone : MonoBehaviour
     public string boneName; // El nombre del hueso al que deseas pegar el objeto
     public GameObject objectToAttach; // El objeto que deseas pegar al hueso
 
+    public Vector2 positionOffset;
+    
     private Bone bone; // Referencia al hueso de Spine
 
     void Start()
@@ -49,10 +51,12 @@ public class AttachObjectToBone : MonoBehaviour
         
         // Obtener la posición y rotación del hueso en el espacio del mundo
         Vector3 boneWorldPosition = skeletonAnimation.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));
-        Quaternion boneWorldRotation = Quaternion.Euler(0, 0, bone.WorldRotationX);
+        Quaternion boneWorldRotation = Quaternion.Euler(0, 0, 0);
+        
+        Vector3 offset = new Vector3(positionOffset.x, positionOffset.y, 0);
         
         // Actualizar la posición y rotación del objeto
-        objectToAttach.transform.position = boneWorldPosition;
+        objectToAttach.transform.position = boneWorldPosition + offset;
         objectToAttach.transform.rotation = boneWorldRotation;
     }
 }

@@ -102,6 +102,7 @@ public class SpineAnim : MonoBehaviour
             Spine.Animation current = null;
 
             current = GetCurrentAnimation(layerIndex);
+            
             if (current != null)
                 transition = TryGetTransition(current, target);
 
@@ -197,7 +198,7 @@ public class SpineAnim : MonoBehaviour
         //return foundTransition;
     }
 
-    Spine.Animation GetCurrentAnimation (int layerIndex) 
+    public Spine.Animation GetCurrentAnimation (int layerIndex) 
     {
         var currentTrackEntry = skeletonAnimation != null ? skeletonAnimation.AnimationState.GetCurrent(layerIndex) : skeletonGraphic.AnimationState.GetCurrent(layerIndex);
         return (currentTrackEntry != null) ? currentTrackEntry.Animation : null;

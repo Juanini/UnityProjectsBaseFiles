@@ -7,6 +7,11 @@ public class PositionHolderEditor : Editor
     private PositionHolder positionHolder;
     private SerializedProperty localPositionsProperty;
 
+    // Configuración para los gizmos (se mostrará en el inspector del editor)
+    public bool drawDebugBox = false;
+    public Vector3 boxSize = new Vector3(1f, 1f, 1f);
+    public Color color = Color.green;
+
     private void OnEnable()
     {
         positionHolder = (PositionHolder)target;
@@ -23,6 +28,11 @@ public class PositionHolderEditor : Editor
         {
             positionHolder.localPositions.Add(Vector3.zero);
         }
+        
+        // Opcional: agregar configuración de gizmos en el inspector
+        drawDebugBox = EditorGUILayout.Toggle("Draw Debug Box", drawDebugBox);
+        boxSize = EditorGUILayout.Vector3Field("Box Size", boxSize);
+        color = EditorGUILayout.ColorField("Box Color", color);
 
         serializedObject.ApplyModifiedProperties();
     }
@@ -31,7 +41,7 @@ public class PositionHolderEditor : Editor
     {
         for (int i = 0; i < positionHolder.localPositions.Count; i++)
         {
-            // Convert the local position to world position for display and manipulation
+            // Convertir la posición local a posición mundial para mostrar y manipular el handle
             Vector3 worldPosition = positionHolder.transform.TransformPoint(positionHolder.localPositions[i]);
 
             EditorGUI.BeginChangeCheck();
@@ -39,9 +49,16 @@ public class PositionHolderEditor : Editor
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(positionHolder, "Move Position Handle");
-                // Convert the manipulated world position back to local position
+                // Convertir la posición manipulada de vuelta a local
                 positionHolder.localPositions[i] = positionHolder.transform.InverseTransformPoint(newWorldPosition);
                 EditorUtility.SetDirty(positionHolder);
+            }
+
+            // Dibujar la caja en la posición mundial
+            if (drawDebugBox)
+            {
+                Handles.color = color;
+                Handles.DrawWireCube(worldPosition, boxSize);
             }
         }
     }

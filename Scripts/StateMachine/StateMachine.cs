@@ -52,7 +52,7 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         }
     }
 
-    public async void TransitionToState(EState _newState)
+    public async UniTask TransitionToState(EState _newState)
     {
         Trace.Log("State Machine - Transition To State - Old State: " + stateActive.StateKey);
         isTransitioningState = true;

@@ -31,6 +31,11 @@ public class AttachObjectToBone : MonoBehaviour
         }
     }
 
+    public void Disable()
+    {
+        objectToAttach = null;
+    }
+
     public async void SetObjectToAttach(GameObject _gameObject)
     {
         await UniTask.WaitUntil(() => skeletonAnimation != null);

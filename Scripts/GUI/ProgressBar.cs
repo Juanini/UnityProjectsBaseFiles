@@ -114,6 +114,12 @@ public class ProgressBar : MonoBehaviour
         valueText.text = 0 + "/" + maxValue;
     }
     
+    public void SetText(string _text)
+    {
+        EnableTextLabel();
+        valueText.text = _text;
+    }
+    
     public void EnableTextLabel()
     {
         valueText.gameObject.SetActive(true);

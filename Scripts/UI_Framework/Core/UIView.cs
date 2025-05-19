@@ -100,6 +100,7 @@ namespace HannieEcho.UI
         #region ShowCallbacks
         public virtual async UniTask Show(bool animated = true)
         {
+            Trace.Log(this.name + " - " + "UI - Showing View - " + name);
             OnViewBeforeAppear();
             if (animated)
             {

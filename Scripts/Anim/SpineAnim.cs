@@ -60,6 +60,22 @@ public class SpineAnim : MonoBehaviour
         }
     }
 
+    public void PlayAnim(string _animName)
+    {
+        if (string.IsNullOrEmpty(_animName)) return;
+
+        // 1. Locate the entry in the list
+        var entry = statesAndAnimations.Find(sa => sa.stateName == _animName);
+        if (entry == null || entry.animation == null)
+        {
+            Debug.LogWarning($"[SpineAnim] Animation '{_animName}' not found."); 
+            return;
+        }
+
+        // 2. Play it on track 0, with transitions enabled
+        PlayNewAnimation(entry.animation.Animation, 0, true);
+    }
+
     /// <summary>Plays an animation based on the state name.</summary>
     public void PlayAnimationForState (string stateShortName, int layerIndex, bool doTransition = true) 
     {

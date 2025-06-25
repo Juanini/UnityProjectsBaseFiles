@@ -77,6 +77,19 @@ public static class DOTweenExtensions
         return DOTween.To(() => disc.Radius, x => disc.Radius = x, endValue, duration);
     }
     
+    public static Tweener DoFade(this Disc disc, float endAlpha, float duration)
+    {
+        var getter = new DOGetter<float>(() => disc.Color.a);
+        var setter = new DOSetter<float>(alpha =>
+        {
+            Color color = disc.Color;
+            color.a = alpha;
+            disc.Color = color;
+        });
+
+        return DOTween.To(getter, setter, endAlpha, duration);
+    }
+    
     public static Tweener DoFade(this Polyline polyline, float endAlpha, float duration)
     {
         var getter = new DOGetter<float>(() => polyline.Color.a);

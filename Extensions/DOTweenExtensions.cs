@@ -90,6 +90,32 @@ public static class DOTweenExtensions
         return DOTween.To(getter, setter, endAlpha, duration);
     }
     
+    /// <summary>
+    /// Quickly enlarges the disc’s radius by <paramref name="_punch"/> and springs it back.
+    /// Works just like DOTween’s built-in Punch helpers for transforms.
+    /// </summary>
+    public static Sequence DOPunchRadius(this Disc disc, float _punch, float _duration)
+    {
+        float originalRadius = disc.Radius;
+
+        // Split the time: fast out, slower elastic return
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(
+                DOTween.To(() => disc.Radius,
+                        x => disc.Radius = x,
+                        originalRadius + _punch,
+                        _duration * 0.3f)
+                    .SetEase(Ease.OutQuad))
+            .Append(
+                DOTween.To(() => disc.Radius,
+                        x => disc.Radius = x,
+                        originalRadius,
+                        _duration * 0.7f)
+                    .SetEase(Ease.OutElastic));
+
+        return sequence;
+    }
+    
     public static Tweener DoFade(this Polyline polyline, float endAlpha, float duration)
     {
         var getter = new DOGetter<float>(() => polyline.Color.a);

@@ -30,12 +30,12 @@ public class BackButtonWidget : MonoBehaviour
     {
         if (onBackClickEvent != null && onBackClickEvent.GetPersistentEventCount() > 0)
         {
-            Audio.PlayUIClick();
+            // Audio.PlayUIClick();
             onBackClickEvent.Invoke();
         }
         else
         {
-            Audio.PlayUIClick();
+            // Audio.PlayUIClick();
             UI.Ins.uiNavigation.HideNavLastView();
         }
     }

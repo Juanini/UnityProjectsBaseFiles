@@ -12,7 +12,7 @@ public class GameLevel : MonoBehaviour
     void Start()
     {
         OnSceneLoaded();
-        GameManager.Ins.OnLevelLoaded(this);
+        // GameManager.Ins.OnLevelLoaded(this);
     }
 
     public virtual void OnSceneLoaded() { }

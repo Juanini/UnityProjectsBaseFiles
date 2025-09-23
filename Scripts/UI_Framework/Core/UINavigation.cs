@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
+using MoreMountains.TopDownEngine;
 
 namespace HannieEcho.UI
 {
@@ -14,6 +15,7 @@ namespace HannieEcho.UI
         private Stack<UIView> m_NavigationViewStack = new Stack<UIView>();
         private Stack<UIView> m_NavigationPopUpStack = new Stack<UIView>();
 
+        private TopDownEngineInputActions inputActions;
         public enum ViewParentMode
         {
             DIALOG, PANEL, POPUP
@@ -30,11 +32,13 @@ namespace HannieEcho.UI
         private void Awake()
         {
             m_OnBackView = null;
+            inputActions = new TopDownEngineInputActions();
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && backKeyControlsNavigation)
+            // if (Input.GetKeyDown(KeyCode.Escape) && backKeyControlsNavigation)
+            if (inputActions.UI.Cancel.IsPressed() && backKeyControlsNavigation)
             {
                 if (!m_OnBackView)
                 {

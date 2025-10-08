@@ -9,7 +9,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
         {
             if (ins == null)
             {
-                ins = (T)FindObjectOfType(typeof(T));
+                ins = (T)FindFirstObjectByType(typeof(T));
                 if (ins == null)
                 {
                     SetupInstance();
@@ -27,7 +27,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     
     private static void SetupInstance()
     {
-        ins = (T)FindObjectOfType(typeof(T));
+        ins = (T)FindFirstObjectByType(typeof(T));
         if (ins == null)
         {
             GameObject gameObj = new GameObject();

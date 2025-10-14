@@ -9,14 +9,14 @@ public class ButtonCustom : MonoBehaviour
 {
     [BoxGroup("Elements")] public TextMeshProUGUI buttonTextLabel;
 
-    [BoxGroup("Properties")] public string buttonTextStr;
+    // [BoxGroup("Properties")] public string buttonTextStr;
 
     public Button button;
 
     void Awake()
     {
         button = GetComponent<Button>();
-        buttonTextLabel.text = buttonTextStr;
+        // buttonTextLabel.text = buttonTextStr;
     }
 
     public void SetAction(UnityAction action)
@@ -26,11 +26,11 @@ public class ButtonCustom : MonoBehaviour
         button.onClick.AddListener(ButtonSound);
     }
 
-    public void SetText(string text)
-    {
-        buttonTextStr = text;
-        buttonTextLabel.text = buttonTextStr;
-    }
+    // public void SetText(string text)
+    // {
+    //     buttonTextStr = text;
+    //     buttonTextLabel.text = buttonTextStr;
+    // }
 
     public void SetInteractable(bool enabled)
     {

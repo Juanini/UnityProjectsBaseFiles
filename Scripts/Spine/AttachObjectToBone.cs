@@ -46,6 +46,9 @@ public class AttachObjectToBone : MonoBehaviour
 
     private void SetupBone()
     {
+        if(skeletonAnimation.skeleton == null) return;
+        if(boneName == null) return;
+        
         bone = skeletonAnimation.skeleton.FindBone(boneName);
     }
 

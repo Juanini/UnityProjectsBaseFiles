@@ -45,7 +45,7 @@ public class ScrollBarCustom : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void OnScrollChanged(Vector2 _normalizedPos)
     {
         float v = Mathf.Clamp01(GetVerticalValue()); // 0 = bottom, 1 = top
-        Trace.Log(this.name + " - " + "VERTICAL POS = " + v.ToString("0.000"));
+        // Trace.Log(this.name + " - " + "VERTICAL POS = " + v.ToString("0.000"));
 
         if (!imageRect || !imageParent || !topPosition || !bottomPosition) return;
 

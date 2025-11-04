@@ -34,23 +34,23 @@ namespace HannieEcho.UI
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && backKeyControlsNavigation)
-            {
-                if (!m_OnBackView)
-                {
-                    m_OnBackView = GetTopView();
-                    if (!m_OnBackView) return;
-
-                    if (m_OnBackView.allowHideNavigationBack)
-                    {
-                        Trace.Log($"<color=green>Start back key process with view: {m_OnBackView.name}</color>");
-                        m_OnBackView.OnViewDismissedByBackKey();
-                        HideNavLastView(animated: backKeyAnimatedAnimation);
-                    }
-                    else
-                        m_OnBackView = null;
-                }
-            }
+            // if (Input.GetKeyDown(KeyCode.Escape) && backKeyControlsNavigation)  // Change this to New Input System
+            // {
+            //     if (!m_OnBackView)
+            //     {
+            //         m_OnBackView = GetTopView();
+            //         if (!m_OnBackView) return;
+            //
+            //         if (m_OnBackView.allowHideNavigationBack)
+            //         {
+            //             Trace.Log($"<color=green>Start back key process with view: {m_OnBackView.name}</color>");
+            //             m_OnBackView.OnViewDismissedByBackKey();
+            //             HideNavLastView(animated: backKeyAnimatedAnimation);
+            //         }
+            //         else
+            //             m_OnBackView = null;
+            //     }
+            // }
         }
 
         public void Init(UIManager manager)

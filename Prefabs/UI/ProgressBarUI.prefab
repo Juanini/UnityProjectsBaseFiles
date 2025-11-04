@@ -359,6 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hideText: 1
   bar: {fileID: 2532765030339373835}
+  barImage: {fileID: 2904609478396832621}
   startPos: {fileID: 2350485559660355724}
   completePos: {fileID: 2075728211207856481}
   valueText: {fileID: 6245703437060151443}

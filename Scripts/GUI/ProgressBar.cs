@@ -2,6 +2,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class ProgressBar : MonoBehaviour
@@ -11,6 +12,7 @@ public class ProgressBar : MonoBehaviour
     
     [Header("Elements")]
     public GameObject bar;
+    public Image barImage;
     public GameObject startPos;
     public GameObject completePos;
     public TextMeshProUGUI valueText;

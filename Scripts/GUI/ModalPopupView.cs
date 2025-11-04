@@ -69,6 +69,7 @@ public class ModalPopupView : UIView
     
     public void ClosePanel()
     {
+        Audio.Ins.PlayOneShot(Audio.Ins.closeWindow);
         UI.Ins.uiNavigation.HideNavLastView();
     }
     

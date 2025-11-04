@@ -37,6 +37,13 @@ public class OffscreenObjectPointer : MonoBehaviour
     void Update()
     {
         if (!isActive){ return; }
+
+        if (TutorialManager.Ins.IsActive)
+        {
+            pointer.gameObject.SetActive(false);
+            return;
+        }
+        
         if(target == null) { return; }
         
         if (IsTargetOnScreen())

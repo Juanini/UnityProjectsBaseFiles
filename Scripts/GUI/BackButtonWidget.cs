@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BackButtonWidget : MonoBehaviour
 {
-    public Button backButton;
+    public ButtonCustom backButton;
     private bool isInitialized;
     [SerializeField] private bool autoInit = false;
     
@@ -23,7 +23,7 @@ public class BackButtonWidget : MonoBehaviour
         if (isInitialized) { return; }
         
         isInitialized = true;
-        backButton.onClick.AddListener(OnBackClick);
+        backButton.SetAction(OnBackClick);
     }
 
     private void OnBackClick()
@@ -42,7 +42,7 @@ public class BackButtonWidget : MonoBehaviour
 
     public void SetOnBackClick(UnityAction action)
     {
-        backButton.onClick.RemoveAllListeners();
-        backButton.onClick.AddListener(action);
+        backButton.button.onClick.RemoveAllListeners();
+        backButton.SetAction(action);
     }
 }

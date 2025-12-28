@@ -412,8 +412,13 @@ namespace HannieEcho.UI
 		}
 		public UIView GetActivePanelType<T>() where T : UIView
 		{
+			return m_NavigationViewStack.Count > 0? m_NavigationViewStack.Peek() : null;
+		}
+
+        public bool IsPanelInCollection<T>() where T: UIView
+        {
             var type = typeof(T);
-			return m_PanelViewCollection.ContainsKey(type) ? m_PanelViewCollection[type] : null;
+            return m_PanelViewCollection.ContainsKey(type);
 		}
 	}
 }

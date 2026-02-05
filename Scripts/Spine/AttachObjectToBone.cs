@@ -38,7 +38,7 @@ public class AttachObjectToBone : MonoBehaviour
 
     public async void SetObjectToAttach(GameObject _gameObject)
     {
-        await UniTask.WaitUntil(() => skeletonAnimation != null);
+        // await UniTask.WaitUntil(() => skeletonAnimation != null);
         
         objectToAttach = _gameObject;
         SetupBone();
@@ -46,6 +46,7 @@ public class AttachObjectToBone : MonoBehaviour
 
     private void SetupBone()
     {
+        if(!skeletonAnimation) return;
         if(skeletonAnimation.skeleton == null) return;
         if(boneName == null) return;
         
@@ -54,7 +55,10 @@ public class AttachObjectToBone : MonoBehaviour
 
     void LateUpdate()
     {
-        if (bone == null) return;
+        if (bone == null)
+        {
+            SetupBone();
+        }
         if (objectToAttach == null) return;
         
         // Obtener la posición y rotación del hueso en el espacio del mundo

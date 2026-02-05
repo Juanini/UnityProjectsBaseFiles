@@ -19,10 +19,12 @@ public class ButtonCustom : MonoBehaviour
     [BoxGroup("TUTORIAL")] public bool isTutorialButton;
 
     private UnityAction action;
+    private string originalTutoId;
     
     void Awake()
     {
         button = GetComponent<Button>();
+        if (string.IsNullOrEmpty(originalTutoId)) originalTutoId = tutoIds;
         SubscribeToTutoEvents();
     }
 
@@ -33,7 +35,7 @@ public class ButtonCustom : MonoBehaviour
 
     public void SetAction(UnityAction _action)
     {
-        Trace.Log("Button Custom - Action: ");
+        // Trace.Log("Button Custom - Action: ");
         
         action = _action;
         
@@ -129,8 +131,10 @@ public class ButtonCustom : MonoBehaviour
 
     public void SetsTutorialCustomNumberId(int _tutorialCustomNumberId)
     {
+        if(string.IsNullOrEmpty(originalTutoId)) originalTutoId = tutoIds;
+        
         tutorialCustomNumberId =  _tutorialCustomNumberId;
-        tutoIds = tutoIds + _tutorialCustomNumberId;
+        tutoIds = originalTutoId + _tutorialCustomNumberId;
     }
 
     #endregion

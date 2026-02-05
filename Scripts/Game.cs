@@ -4,8 +4,9 @@ using GameEventSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Game : MonoBehaviour
+public class Game : Singleton<Game>
 {
+    public BalanceConfig balanceConfig;
     private static bool isInputBlocked = false;
     public static bool IsOnline { get; set; }
     public static bool IsInputBlocked => isInputBlocked;

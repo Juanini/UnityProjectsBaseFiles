@@ -400,5 +400,12 @@ namespace HannieEcho.UI
         {
             return m_NavigationPopUpStack.Count > 0;
         }
-    }
+
+		public UIView GetActivePopupType()
+		{
+            if (m_NavigationPopUpStack.Count > 0)
+                return m_NavigationPopUpStack.Peek();
+            return null;
+		}
+	}
 }

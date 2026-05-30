@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class OffscreenObjectPointer : MonoBehaviour
 {
-    private Transform target; // El objetivo a seguir
-    public RectTransform pointer; // El RectTransform del pointer
-    public RectTransform arrow; // El RectTransform de la flecha, hijo del pointer
-    public RectTransform canvasRectTransform; // El RectTransform del canvas
-    public Camera mainCamera; // La cámara principal que está en uso
+    private Transform target;
+    public RectTransform pointer;
+    public RectTransform arrow;
+    public RectTransform canvasRectTransform;
+    public Camera mainCamera;
 
     public Button button;
+
+    [Header("Pointer Settings")]
+    public Vector2 pointerOffset = Vector2.zero; // <--- NEW
 
     private void Start()
     {
@@ -64,7 +67,7 @@ public class OffscreenObjectPointer : MonoBehaviour
         
         if (screenPoint.z < 0)
         {
-            return false; // Si el objeto está detrás de la cámara, no está en pantalla
+            return false;
         }
 
         Vector2 localPoint;
@@ -86,14 +89,25 @@ public class OffscreenObjectPointer : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRectTransform, screenPos, mainCamera, out canvasPos);
 
         Vector2 clampedPosition = canvasPos;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, -canvasRectTransform.rect.width / 2 + pointer.rect.width / 2, canvasRectTransform.rect.width / 2 - pointer.rect.width / 2);
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -canvasRectTransform.rect.height / 2 + pointer.rect.height / 2, canvasRectTransform.rect.height / 2 - pointer.rect.height / 2);
 
-        pointer.localPosition = clampedPosition;
+        float halfW = canvasRectTransform.rect.width  / 2;
+        float halfH = canvasRectTransform.rect.height / 2;
+        float halfPW = pointer.rect.width  / 2;
+        float halfPH = pointer.rect.height / 2;
+
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, -halfW + halfPW, halfW - halfPW);
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -halfH + halfPH, halfH - halfPH);
+
+        // Offset pushes inward: sign matches the direction toward screen center
+        Vector2 inwardSign = new Vector2(
+            clampedPosition.x >= 0 ? -1f : 1f,
+            clampedPosition.y >= 0 ? -1f : 1f
+        );
+
+        pointer.localPosition = clampedPosition + pointerOffset * inwardSign;
 
         Vector2 direction = target.position - mainCamera.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // pointer.localRotation = Quaternion.Euler(0, 0, angle);
         arrow.localRotation = Quaternion.Euler(0, 0, angle);
     }
 

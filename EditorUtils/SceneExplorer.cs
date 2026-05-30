@@ -10,7 +10,7 @@ public class SceneExplorer : EditorWindow
     public static List<string> scenePaths = new List<string>();
     private Vector2 scrollPos;
 
-    [MenuItem("Tools/Scene Explorer")]
+    [MenuItem("Hannie Echo/Scene Explorer")]
     public static void ShowWindow()
     {
         var window = GetWindow<SceneExplorer>();

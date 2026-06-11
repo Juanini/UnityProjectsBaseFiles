@@ -32,8 +32,9 @@ public class Game : Singleton<Game>
 
     public static string GetDateAndTimeNow()
     {
-        DateTime now = DateTime.Now;
-        return now.ToString("yyyy-MM-dd HH:mm:ss");
+        // InvariantCulture: on some device locales (non-Gregorian calendars, custom separators)
+        // culture-sensitive formatting produces strings the parsers can't read back.
+        return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
     }
     
     public static bool IsValidDate(string _date)
@@ -47,16 +48,13 @@ public class Game : Singleton<Game>
 
     public static double GetSecondsDifferenceFromDateToNow(string _date)
     {
-        DateTime date1;
-        if (!DateTime.TryParse(_date, out date1))
+        if (!DateTime.TryParseExact(_date, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var date1)
+            && !DateTime.TryParse(_date, out date1)) // Fallback for dates saved before invariant formatting
         {
             return 0;
         }
 
-        DateTime date2 = DateTime.Parse(GetDateAndTimeNow());
-
-        TimeSpan difference = date2.Subtract(date1);
-        return difference.TotalSeconds;
+        return (DateTime.Now - date1).TotalSeconds;
     }
     
     public static double GetSecondsDifferenceBetweenDates(string date1, string date2)

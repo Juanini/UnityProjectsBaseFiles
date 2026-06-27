@@ -23,7 +23,8 @@ public class LocManager : MonoBehaviour
 
     public static string GetText(string _key)
     {
-        return I2.Loc.LocalizationManager.GetTranslation(_key);
+        bool translationFound = LocalizationManager.TryGetTranslation(_key, out string translation);
+        return translationFound? translation : _key;
     }
 
     // * =====================================================================================================================================

@@ -36,6 +36,8 @@ public abstract class StateMachine<EState> : MonoBehaviour where EState : Enum
         return null;
     }
 
+    public bool HasActiveState => stateActive != null;
+
     public EState GetCurrentState()
     {
         return stateActive.StateKey;

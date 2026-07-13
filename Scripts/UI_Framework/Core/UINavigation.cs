@@ -88,6 +88,8 @@ namespace HannieEcho.UI
             return result;
         }
 
+        public bool HasOpenPopup => m_NavigationPopUpStack.Count > 0;
+
         public UIView GetTopView()
         {
             if (m_NavigationPopUpStack.Count > 0)

@@ -10,6 +10,7 @@ namespace HannieEcho.UI.Data
         public abstract UniTask Animate(UIView view);
         public abstract void Init();
         public abstract UniTask AfterScreenInit();
+        public virtual void BeforeAnimate(UIView view) { }
 
         /// <summary>
         /// 

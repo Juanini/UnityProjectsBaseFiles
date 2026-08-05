@@ -106,7 +106,12 @@ namespace HannieEcho.UI
             {
                 //var tcs = new TaskCompletionSource<bool>();
                 m_Status = ViewStatus.ANIMATING;
-                
+
+                if (m_ShowAnim)
+                {
+                    m_ShowAnim.BeforeAnimate(this);
+                }
+
                 this.gameObject.SetActive(true);
 
                 if (m_ShowAnim)
@@ -139,6 +144,7 @@ namespace HannieEcho.UI
                 
                 if (m_HideAnim)
                 {
+                    m_HideAnim.BeforeAnimate(this);
                     await m_HideAnim.Animate(this);
                 }
 

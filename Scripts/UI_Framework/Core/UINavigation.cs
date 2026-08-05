@@ -157,7 +157,7 @@ namespace HannieEcho.UI
             if (!view) return null;
 
             beforeShown?.Invoke((T)view);
-            if (view.Status == ViewStatus.ACTIVE) return null;
+            if (view.Status != ViewStatus.INACTIVE) return null;
 
             UIView lastView = null;
             if (m_NavigationViewStack.Count > 0)
@@ -182,7 +182,7 @@ namespace HannieEcho.UI
             if (!view) return null;
 
             beforeShown?.Invoke((T)view);
-            if (view.Status == ViewStatus.ACTIVE) return view;
+            if (view.Status != ViewStatus.INACTIVE) return view;
 
             await view.Show(animated);
 
@@ -216,7 +216,7 @@ namespace HannieEcho.UI
             }
 
             beforeShown?.Invoke((T)view);
-            if (view.Status == ViewStatus.ACTIVE) return view;
+            if (view.Status != ViewStatus.INACTIVE) return view;
 
             // UIView lastView = null;
             // if (m_NavigationPopUpStack.Count > 0)
@@ -243,7 +243,7 @@ namespace HannieEcho.UI
             }
 
             beforeShown?.Invoke((T)view);
-            if (view.Status == ViewStatus.ACTIVE) return view;
+            if (view.Status != ViewStatus.INACTIVE) return view;
 
             m_NavigationPopUpStack.Push(view);
             await view.Show(animated);

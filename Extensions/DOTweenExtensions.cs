@@ -32,6 +32,29 @@ public static class DOTweenExtensions
         return target.DOPunchScale(punchVector, duration);
     }
     
+    public static Sequence DoFadeAndMoveFromDirection(this CanvasGroup canvasGroup, Direction direction, float amount, float time, float fadeTo)
+    {
+        RectTransform rectTransform = canvasGroup.transform as RectTransform;
+        Vector2 targetPosition = rectTransform.anchoredPosition;
+
+        Vector2 offset = direction switch
+        {
+            Direction.UP    => new Vector2(0f, amount),
+            Direction.DOWN  => new Vector2(0f, -amount),
+            Direction.RIGHT => new Vector2(amount, 0f),
+            Direction.LEFT  => new Vector2(-amount, 0f),
+            _               => Vector2.zero
+        };
+
+        rectTransform.anchoredPosition = targetPosition + offset;
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Join(rectTransform.DOAnchorPos(targetPosition, time))
+            .Join(canvasGroup.DOFade(fadeTo, time));
+
+        return sequence;
+    }
+
     // * =====================================================================================================================================
     // * SPINE
     

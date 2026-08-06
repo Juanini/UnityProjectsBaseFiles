@@ -1,13 +1,11 @@
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using HannieEcho.UI;
-using HannieEcho.UI.Data;
 using UnityEngine;
+using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
-public class FadeOutUIAnimation : MonoBehaviour
+namespace HannieEcho.UI.Data
 {
     [CreateAssetMenu(fileName = "FadeOutAnim", menuName = "UI/Animations/Fade Out", order = 1)]
-    public class FadeInUIAnimation : UIAnimation
+    public class FadeOutUIAnimation : UIAnimation
     {
         [SerializeField] private float duration = 0.25f;
         [SerializeField] private Ease ease = Ease.OutQuad;

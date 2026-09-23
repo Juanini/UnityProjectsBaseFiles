@@ -36,8 +36,8 @@ public class ModalPopupView : UIView
             yesButton.onClick.RemoveAllListeners();
             yesButton.onClick.AddListener (yesEvent);
 
-            yesButton.onClick.AddListener (ClosePanel);
-            yesButton.onClick.AddListener (TriggerButtonSound);
+            yesButton.onClick.AddListener (HidePanel);
+            yesButton.onClick.AddListener (Audio.PlayEnter);
             yesButton.gameObject.SetActive (true);
         }
     
@@ -70,6 +70,11 @@ public class ModalPopupView : UIView
     public void ClosePanel()
     {
         Audio.Ins.PlayOneShot(Audio.Ins.closeWindow);
+        HidePanel();
+    }
+
+    private void HidePanel()
+    {
         UI.Ins.uiNavigation.HideNavLastView();
     }
     

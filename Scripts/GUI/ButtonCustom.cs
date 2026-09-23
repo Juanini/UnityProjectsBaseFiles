@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FMODUnity;
 using Obvious.Soap;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,6 +20,9 @@ public class ButtonCustom : MonoBehaviour
     [BoxGroup("TUTORIAL")] public bool isTutorialButton;
 
     private UnityAction action;
+    private bool hasCustomSound;
+    private bool isSoundMuted;
+    private EventReference customSound;
     private string originalTutoId;
     
     void Awake()
@@ -71,8 +75,28 @@ public class ButtonCustom : MonoBehaviour
         GetButton().interactable = enabled;
     }
 
+    public void SetSound(EventReference _sound)
+    {
+        customSound = _sound;
+        hasCustomSound = true;
+        isSoundMuted = false;
+    }
+
+    public void MuteSound()
+    {
+        isSoundMuted = true;
+    }
+
     public void ButtonSound()
     {
+        if (isSoundMuted) return;
+
+        if (hasCustomSound)
+        {
+            Audio.PlaySound(customSound);
+            return;
+        }
+
         Audio.PlayUIClick();
     }
 

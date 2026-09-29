@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
 using UnityEngine.EventSystems;
+using EnhancedUI.EnhancedScroller;
 
 public class ScrollBarCustom : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
@@ -22,12 +23,15 @@ public class ScrollBarCustom : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // Privates afterward
     private RectTransform imageRect;
     private RectTransform imageParent;
-    private Tween moveTween;
+    private DG.Tweening.Tween moveTween;
+    private EnhancedScroller enhancedScroller;
+    private float lastT = -1f;
 
     private void Awake()
     {
         imageRect = handle ? handle.rectTransform : null;
         imageParent = imageRect ? imageRect.parent as RectTransform : null;
+        enhancedScroller = scrollRect ? scrollRect.GetComponent<EnhancedScroller>() : null;
     }
 
     private void OnEnable()
@@ -44,28 +48,68 @@ public class ScrollBarCustom : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void OnScrollChanged(Vector2 _normalizedPos)
     {
-        float v = Mathf.Clamp01(GetVerticalValue()); // 0 = bottom, 1 = top
-        // Trace.Log(this.name + " - " + "VERTICAL POS = " + v.ToString("0.000"));
-
         if (!imageRect || !imageParent || !topPosition || !bottomPosition) return;
 
-        // Map normalized value to [start,end]
-        // Default (invert=false): v=1 -> start, v=0 -> end
-        float t = invert ? v : (1f - v);
+        float t = GetHandleT();
+        bool wrapped = lastT >= 0f && Mathf.Abs(t - lastT) > 0.5f;
+        lastT = t;
 
         Vector2 startLocal = WorldToLocalInParent(topPosition.transform.position);
         Vector2 endLocal   = WorldToLocalInParent(bottomPosition.transform.position);
         Vector2 targetLocal = Vector2.Lerp(startLocal, endLocal, t);
 
-        if (moveDuration > 0f)
+        if (moveDuration > 0f && !wrapped && !isDragging)
         {
             moveTween?.Kill();
             moveTween = imageRect.DOAnchorPos(targetLocal, moveDuration).SetEase(moveEase);
         }
-        else
+        else if (!isDragging)
         {
+            moveTween?.Kill();
             imageRect.anchoredPosition = targetLocal;
         }
+    }
+
+    private bool IsLooping()
+    {
+        return enhancedScroller && enhancedScroller.Loop && enhancedScroller.Delegate != null
+               && enhancedScroller.Delegate.GetNumberOfCells(enhancedScroller) > 0;
+    }
+
+    private bool TryGetLoopRange(out float groupStart, out float groupSize)
+    {
+        groupStart = 0f;
+        groupSize = 0f;
+        if (!IsLooping()) return false;
+
+        int count = enhancedScroller.Delegate.GetNumberOfCells(enhancedScroller);
+        groupStart = enhancedScroller.GetScrollPositionForCellViewIndex(count, EnhancedScroller.CellViewPositionEnum.Before);
+        groupSize = enhancedScroller.GetScrollPositionForCellViewIndex(count * 2, EnhancedScroller.CellViewPositionEnum.Before) - groupStart;
+        return groupSize > 0f;
+    }
+
+    private float GetHandleT()
+    {
+        if (TryGetLoopRange(out float groupStart, out float groupSize))
+        {
+            float loopT = Mathf.Repeat(enhancedScroller.ScrollPosition - groupStart, groupSize) / groupSize;
+            return invert ? 1f - loopT : loopT;
+        }
+
+        float v = Mathf.Clamp01(GetVerticalValue());
+        return invert ? v : (1f - v);
+    }
+
+    private void SetFromHandleT(float t)
+    {
+        if (TryGetLoopRange(out float groupStart, out float groupSize))
+        {
+            float loopT = invert ? 1f - t : t;
+            enhancedScroller.ScrollPosition = groupStart + Mathf.Min(loopT, 0.999f) * groupSize;
+            return;
+        }
+
+        scrollRect.verticalNormalizedPosition = invert ? t : (1f - t);
     }
 
     private Vector2 WorldToLocalInParent(Vector3 _worldPos)
@@ -101,6 +145,7 @@ public class ScrollBarCustom : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (!imageRect || !imageParent) return;
         isDragging = true;
         moveTween?.Kill(); // stop any smooth tween while user drags
+        if (scrollRect) scrollRect.StopMovement();
 
         // Recompute offset in case drag started without prior pointer down on the handle
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -137,11 +182,7 @@ public class ScrollBarCustom : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // Compute t along [top..bottom] => 0 at top, 1 at bottom
         float t = Mathf.InverseLerp(startLocal.y, endLocal.y, clamped.y);
 
-        // Map to ScrollRect verticalNormalizedPosition:
-        // Unity: v=1 top, v=0 bottom
-        float v = invert ? t : (1f - t);
-
-        scrollRect.verticalNormalizedPosition = v;
+        SetFromHandleT(t);
     }
 
     public void OnEndDrag(PointerEventData _eventData)

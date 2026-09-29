@@ -53,6 +53,7 @@ namespace HannieEcho.UI
 
         private ViewStatus m_Status;
         public ViewStatus Status => m_Status;
+        private int m_TransitionId;
         [HideInInspector] public UINavigation navController;
 
         private Coroutine m_CoroutineOfAnimation;
@@ -101,6 +102,7 @@ namespace HannieEcho.UI
         public virtual async UniTask Show(bool animated = true)
         {
             Trace.Log(this.name + " - " + "UI - Showing View - " + name, gameObject);
+            int transitionId = ++m_TransitionId;
             OnViewBeforeAppear();
             if (animated)
             {
@@ -119,6 +121,7 @@ namespace HannieEcho.UI
                     await m_ShowAnim.Animate(this);
                 }
 
+                if (transitionId != m_TransitionId) return;
                 OnShowEndPromise();
             }
             else
@@ -137,6 +140,7 @@ namespace HannieEcho.UI
         #region HideCallbacks
         public virtual async UniTask Hide(bool animated = true)
         {
+            int transitionId = ++m_TransitionId;
             OnViewBeforeDisappear();
             if (animated)
             {
@@ -148,6 +152,7 @@ namespace HannieEcho.UI
                     await m_HideAnim.Animate(this);
                 }
 
+                if (transitionId != m_TransitionId) return;
                 OnHideEndPromise();
             }
             else

@@ -9,10 +9,16 @@ public class ModalPopupView : UIView
 {
     public CanvasGroup container;
     public TextMeshProUGUI textDialog;
+    public GameObject titleContainer;
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI infoText;
+    public float infoSpace = 105f;
     public Button yesButton;
     public Button noButton;
     public Button cancelButton;
-    
+
+    private float fullHeight = -1f;
+
     public override void OnViewCreated()
     {
         base.OnViewCreated();
@@ -23,10 +29,24 @@ public class ModalPopupView : UIView
         string text,
         UnityAction yesEvent    = null, 
         UnityAction noEvent     = null, 
-        UnityAction cancelEvent = null)
+        UnityAction cancelEvent = null,
+        string info             = null,
+        string title            = null)
     {
         textDialog.text = text;
-        
+
+        var hasTitle = !string.IsNullOrEmpty(title);
+        titleContainer.SetActive(hasTitle);
+        if (hasTitle) titleText.text = title;
+
+        var hasInfo = !string.IsNullOrEmpty(info);
+        infoText.gameObject.SetActive(hasInfo);
+        if (hasInfo) infoText.text = "<sprite=10> " + info;
+
+        var panelRect = (RectTransform)container.transform;
+        if (fullHeight < 0) fullHeight = panelRect.sizeDelta.y;
+        panelRect.sizeDelta = new Vector2(panelRect.sizeDelta.x, hasInfo ? fullHeight : fullHeight - infoSpace);
+
         yesButton.gameObject.SetActive (false);
         noButton.gameObject.SetActive (false);
         cancelButton.gameObject.SetActive (false);

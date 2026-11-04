@@ -11,7 +11,11 @@ public class TabUI : MonoBehaviour
     public Image image;
     public Sprite onSprite;
     public Sprite offSprite;
-    
+
+    [BoxGroup("ICON")] public Image iconImage;
+    [BoxGroup("ICON")] public Sprite iconOnSprite;
+    [BoxGroup("ICON")] public Sprite iconOffSprite;
+
     [BoxGroup("CHANGES")] public RectTransform tabImage;
     [BoxGroup("CHANGES")] public RectTransform tabNormalSizeDelta; 
     [BoxGroup("CHANGES")] public RectTransform tabSelectedSizeDelta; 
@@ -19,6 +23,9 @@ public class TabUI : MonoBehaviour
     public void SetState(bool _isActive)
     {
         image.sprite = _isActive ? onSprite : offSprite;
+
+        var iconSprite = _isActive ? iconOnSprite : iconOffSprite;
+        if (iconImage && iconSprite) iconImage.sprite = iconSprite;
     }
 
     public void SetSizeDeltaNormal()
